@@ -1,3 +1,5 @@
+package test;
+
 import static org.junit.Assert.*;
 
 import org.junit.Test;
@@ -11,9 +13,15 @@ public class CollageTester {
 		Collage c = new Collage();
 		c.setImage("testImage");
 		c.setTopic("testTopic");
+		c.setFilter("testFilter");
+		c.setBorder(true);
+		c.setRotation(true);
 		
 		assertEquals("testImage", c.getImage());
 		assertEquals("testTopic", c.getTopic());
+		assertEquals("testFilter", c.getFilter());
+		assertEquals(true, c.getBorder());
+		assertEquals(true, c.getRotation());
 	}
 
 }
