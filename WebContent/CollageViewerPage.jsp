@@ -64,31 +64,31 @@
 				<!-- Div to hold all of the buttons and input fields -->
 				<form class="BuildAnotherCollageForm">
 						<div id="left">
-						<label><input type="text" name="topic" class="input" placeholder="Enter Topic" oninput="IsEmpty()"  disable onsubmit="buildCollage()"></label>
+						<label><input type="text" id="topic" name="topic" class="input" placeholder="Enter Topic" oninput="IsEmpty()"  disable onsubmit="buildCollage()"></label>
 
-						<label><input type="text" name="shape" class="input" placeholder="Enter Shape" oninput="IsEmpty()"  disable onsubmit="buildCollage()"></br></label>
-						<label><input type="submit" class="buttons" value="Build Collage"></label>
+						<label><input type="text" id="shape" name="shape" class="input" placeholder="Enter Shape" oninput="IsEmpty()"  disable onsubmit="buildCollage()"></br></label>
+						<label><input type="submit" id="submitButton" class="buttons" value="Build Collage"></label>
 						</div>
 
 						<div id="right">
-						<label><input type="submit" class="buttons" value="Save"></label>
-						<label><input type="submit" class="buttons" value="Export"></label>
-						<label><input type="submit" class="buttons" value="Delete"></label>
-						<label><input type="submit" class="buttons" value="Logout" action="/loginPage.jsp"></label>
+						<label><input type="submit" id="saveButton" class="buttons" value="Save"></label>
+						<label><input type="submit" id="exportButton" class="buttons" value="Export"></label>
+						<label><input type="submit" id="deleteButton" class="buttons" value="Delete"></label>
+						<label><input type="submit" id="logoutButton" class="buttons" value="Logout" action="/loginPage.jsp"></label>
 						
 						</div>
 
 						<div id="middle">
-						<label><input type="radio" name="filter" value="none" checked> None    
-						<input type="radio" name="filter" value="blackAndWhite"> Black & White    
-						<input type="radio" name="filter" value="grayscale"> Grayscale    
-  						<input type="radio" name="filter" value="sepia"> Sepia</label>
+						<label><input type="radio" id="none" name="filter" value="none" checked> None    
+						<input type="radio" id="blackAndWhite" name="filter" value="blackAndWhite"> Black & White    
+						<input type="radio" id="grayscale" name="filter" value="grayscale"> Grayscale    
+  						<input type="radio" id="sepia" name="filter" value="sepia"> Sepia</label>
 
-  						<label>Photo Borders <input type="radio" name="border" value="borderOn" checked> ON
-						<input type="radio" name="border" value="borderOff"> OFF</br></label>
+  						<label>Photo Borders <input type="radio" id="borderOn" name="border" value="borderOn" checked> ON
+						<input type="radio" id="borderOff" name="border" value="borderOff"> OFF</br></label>
 
-						<label>Photo Rotations <input type="radio" name="rotations" value="rotateOn" checked> ON
-						<input type="radio" name="rotations" value="rotateOff"> OFF</br></label>
+						<label>Photo Rotations <input type="radio" id="rotateOn" name="rotations" value="rotateOn" checked> ON
+						<input type="radio" id="rotateOff" name="rotations" value="rotateOff"> OFF</br></label>
 						</div>
 
 						
