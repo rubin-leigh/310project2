@@ -5,8 +5,7 @@ Background:
 	Given we are on the collage viewer page
 
 Scenario: we can change the filter options for the generated collage
-	
-	Then I should see there is a button called FilterOptions
+
 	Then I should see there is a radio button called "black&white"
 	Then I should see there is a radio button called "sepia"
 	Then I should see there is a radio button called "grayscale"
@@ -14,13 +13,11 @@ Scenario: we can change the filter options for the generated collage
 
 Scenario: we can change the photo rotation for the generated collage
 	
-	Then I should see there is a button called PhotoRotation
 	Then I should see there is a radio button called "on"
 	Then I should see there is a radio button called "off"
 
 Scenario: we can change the photo border for the generated collage
 	
-	Then I should see there is a button called PhotoBorder
 	Then I should see there is a radio button called "on"
 	Then I should see there is a radio button called "off"
 

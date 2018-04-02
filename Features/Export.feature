@@ -5,11 +5,9 @@ Background:
 
 Scenario: Export Button Exists
 
-	When we create a new collage "Button"
-	Then I should see there is a buttton called "export"
+	Then I should see there is a button called "export"
 
 Scenario: png and pdf Radio Buttons Exists
 
-	When we create a new collage "Radio"
-	Then I should see there is a radio buttton called "png"
-	Then I should see there is a radio buttton called "pdf"
+	Then I should see there is a radio button called "png"
+	Then I should see there is a radio button called "pdf"
