@@ -9,7 +9,7 @@
 	%> --%>
 		<head>
 			<meta charset="UTF-8">
-			<title>Collage Viewer Page</title>
+			<title>User Page</title>
 			<link rel="stylesheet" href="CollageViewerPage.css">
 		</head>
 		<!-- <script>
