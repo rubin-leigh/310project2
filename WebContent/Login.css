@@ -1,0 +1,48 @@
+@charset "UTF-8";
+
+h1 {
+	 font-size: 40px;
+}
+body {
+    background-color: ;
+}
+
+input.uName{
+	border:1px solid black;
+	width: 20%;
+	height: 15%;
+}
+input.pWord{
+	border:1px solid black;
+	width: 20%;
+	height: 15%;
+}
+input.loginButtonClass{
+	color: white;
+	background-color: #696969;
+	width: 20%;
+	height: 100%;
+	border: none;
+}
+.header{
+	margin: auto;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    position: absolute;               
+   	top: 40%;
+}
+.mainBlock{
+	margin: auto;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    position: absolute;               
+   	top: 50%;
+}
+.hidden{
+	display: none;
+}
+.error{
+	color: red;
+}
