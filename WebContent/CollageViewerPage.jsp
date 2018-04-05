@@ -47,18 +47,16 @@
 			<div id="entirePage">
 				<!-- Div to hold the previos collage picker with divs to hold each image -->
 				<div id="container" >
-					 <%for(int i =0; i<previousCollage.size(); i++){%>
-						 <div id=<%=i %> onclick="switchCollage(this)"><img  src="data:image/png;base64,<%=previousCollage.get(i).getImage()%>" width="100%" height="100%" alt="Image Text" /></div>
-					<%}%>
+					  
 				</div>
 				
 				<!-- Title at top of the page -->
-				<h1>Collage For Topic <%= mainCollage.getTopic() %> </h1>
+				<h1>Collage For Topic </h1>
 				<!-- Div to hold the main collage viewing area -->
 				
 				<div class="MainCollageView">
 					<!-- Div to hold image that populates the main collage viewer area -->
-					<img onclick="exb()" id="mainCollage" src="data:image/png;base64,<%=mainCollage.getImage()%> " width="100%" height="100%"/>
+					<img onclick="exb()" id="mainCollage" src="data:image/png;base64," width="100%" height="100%"/>
 				</div>
 				
 				<!-- Div to hold all of the buttons and input fields -->

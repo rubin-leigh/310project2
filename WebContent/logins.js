@@ -22,8 +22,9 @@ document.addEventListener("DOMContentLoaded", function() {
         	$("#error1").text("Invalid username");
     		$("#error2").addClass("hidden");
         	$("#error2").text("Invalid password");
-        	if (status === 0) {
-        		console.log("Insert going to next page code here");
+        	if (loginStatus === 0) {
+        		console.log("running this");
+        		window.location.href = "CollageViewerPage.jsp";
         	} else if (loginStatus === 1) {
         		$("#error2").removeClass("hidden");
         	} else if (loginStatus === 2){
