@@ -1,0 +1,84 @@
+@charset "UTF-8";
+
+h1 {
+	 font-size: 40px;
+}
+body {
+    background-color: #adadad;
+    background-image: url(https://www.transparenttextures.com/patterns/asfalt-dark.png);
+    font-family: Tahoma, Geneva, sans-serif;
+}
+
+input.uName{
+	border:5px solid rgba(0,0,0,0.3);
+	border-radius: 12px;
+	width: 45%;
+	height: 40px;
+	font-size: 1em;
+	margin-top: 10px;
+}
+input.pWord{
+	border:5px solid rgba(0,0,0,0.3);
+	border-radius: 12px;
+	width: 45%;
+	height: 40px;
+	font-size: 1em;
+}
+input.loginButtonClass{
+	color: white;
+	background-color: #696969;
+	width: 45%;
+	height: 45px;
+	font-size: 1em;
+	border:5px solid rgba(0,0,0,0.0);
+	border-radius: 12px;
+	margin-top: 15px;
+}
+input.loginButtonClass:hover {
+	cursor: pointer;
+}
+.signupButtonClass{
+	background-color: transparent;
+	border: none;
+	text-align: center;
+	margin-top: 25px;
+	color: blue;
+}
+.signupButtonClass:hover {
+	text-decoration: underline;
+	cursor: pointer;
+}
+.signupButtonClass:active {
+	color: purple;
+}
+.signupButtonClass:visited {
+	color: purple;
+}
+.header{
+/*	margin: auto;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    position: absolute;               
+   	top: 40%;*/
+}
+.mainBlock{
+	padding-top: 20px;
+	padding-bottom: 30px;
+	margin: auto;
+	margin-top: 200px;
+    width: 45%;
+    height: 45%;
+    text-align: center;
+    position: center;               
+   	top: 50%;
+   	background-color: white;
+   	border-radius: 20px;
+   	border: 10px groove rgba(0,0,0,0.7);
+}
+.hidden{
+	display: none;
+}
+.error{
+	color: red;
+}
