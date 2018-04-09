@@ -23,8 +23,8 @@ public class LoginServlet extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-	private int loginStat;
-	private int otherErr;
+	private String loginStat;
+	private String otherErr;
     public LoginServlet() {
         super();
         // TODO Auto-generated constructor stub
@@ -40,26 +40,26 @@ public class LoginServlet extends HttpServlet {
 		//TODO make this secure
 		HttpSession session = request.getSession();
 		JDBC jdbc = new JDBC();
-		int loginStatus = jdbc.checkUserCredentials(userName, password);
+		String loginStatus = jdbc.checkUserCredentials(userName, password);
 		System.out.println(loginStatus);
 		Gson gson = new Gson();
 		Response res = new Response();
 		if (userName.equals("") && password.equals("")) {
-			res.setCompletedStatus(1);
-			setOtherErr(1);
+			res.setCompletedStatus("bothIncomplete");
+			setOtherErr("bothIncomplete");
 		} else if (userName.equals("")) {
-			res.setCompletedStatus(2);
-			setOtherErr(2);
+			res.setCompletedStatus("incompleteUsername");
+			setOtherErr("incompleteUsername");
 		} else if (password.equals("")) {
-			res.setCompletedStatus(3);
-			setOtherErr(3);
+			res.setCompletedStatus("incompletePassword");
+			setOtherErr("incompletePassword");
 		} else {
-			res.setCompletedStatus(0);
-			setOtherErr(0);
-		}
+			res.setCompletedStatus("complete");
+			setOtherErr("complete");
+		}.
 		res.setLoginStatus(loginStatus);
 		loginStat = loginStatus;
-		if (loginStatus == 0) {		
+		if (loginStatus.equals("successful")) {		
 			session.setAttribute("userName", userName);
 		}
 		jdbc.stop();
@@ -72,19 +72,19 @@ public class LoginServlet extends HttpServlet {
 		
 	}
 
-	public int getLoginStatus() {
+	public String getLoginStatus() {
 		return loginStat;
 	}
 
-	public void setLoginStatus(int loginStatus) {
+	public void setLoginStatus(String loginStatus) {
 		this.loginStat = loginStatus;
 	}
 
-	public int getOtherErr() {
+	public String getOtherErr() {
 		return otherErr;
 	}
 
-	public void setOtherErr(int otherErr) {
+	public void setOtherErr(String otherErr) {
 		this.otherErr = otherErr;
 	}
 
