@@ -20,7 +20,7 @@ Scenario: Collage History should Persist
 Scenario: Collage Swapping
 	When we create a new collage "Swap"
 	And click the save button
-	When we create the collage "Garbage"
+	When we create a new collage "Garbage"
 	And click the collage "Swap" in the PreviousCollageViewer
 	Then the main collage should display the collage for "Swap"
 

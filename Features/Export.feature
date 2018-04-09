@@ -5,9 +5,9 @@ Background:
 
 Scenario: Export Button Exists
 
-	Then I should see there is a button called "export"
+	Then I should see there is a button called export
 
 Scenario: png and pdf Radio Buttons Exists
 
-	Then I should see there is a radio button called "png"
-	Then I should see there is a radio button called "pdf"
+	Then I should see there is a radio button called png
+	Then I should see there is a radio button called pdf
