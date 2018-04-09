@@ -25,7 +25,7 @@
 				<input type="password" id="pWord" name="password" class="pWord" placeholder="Password"></br></br>
 				<input type="submit" id="loginButton" class="loginButtonClass" value="Login">
 			</form>
-			<input id="signupButton" class="signupButtonClass" value="Sign Up?">
+			<input id="signupButton" type="button" class="signupButtonClass" value="Sign Up?" onclick="location.href='SignUp.jsp';" />
 		</div>
 	
 	</body>
