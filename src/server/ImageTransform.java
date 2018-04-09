@@ -1,6 +1,7 @@
 package server;
 
 import java.awt.BasicStroke;
+import java.awt.image.DataBufferByte;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -27,7 +28,12 @@ public class ImageTransform {
 	private String topic;
 	private List<BufferedImage> retrievedImages;
 	private BufferedImage completeImage;
-
+	
+	private boolean borders; 
+	private boolean rotations; 
+	private String filter; 
+	private String letters; 
+	
 	private static final int COLLAGE_WIDTH = 1120;
 	private static final int COLLAGE_HEIGHT = 600;
 	private static final int COLLAGE_SIZE = COLLAGE_WIDTH * COLLAGE_HEIGHT; // total number of pixels
@@ -47,14 +53,67 @@ public class ImageTransform {
 
 
 
-	public ImageTransform(String t) {
+	public ImageTransform(String t, boolean borders, boolean rotations, String filter, String letters) {
 		this.topic = t;
+		this.borders = borders; 
+		this.rotations = rotations;
+		this.filter = filter; 
+		this.letters = letters;
 		this.retrievedImages = new ArrayList<BufferedImage>();
 	}
+	
+	public BufferedImage convertToTextImage(BufferedImage image) {
+		
+		return image;
+	}
+	
+//	private Pixel[][] convertTo2D(BufferedImage image) {
+//
+//	      final byte[] pixels = ((DataBufferByte) image.getRaster().getDataBuffer()).getData();
+//	      final int width = image.getWidth();
+//	      final int height = image.getHeight();
+//	      final boolean hasAlphaChannel = image.getAlphaRaster() != null;
+//
+//	      int[][] result = new int[height][width];
+//	      if (hasAlphaChannel) {
+//	         final int pixelLength = 4;
+//	         for (int pixel = 0, row = 0, col = 0; pixel < pixels.length; pixel += pixelLength) {
+//	            Pixel argb = new Pixel();
+//	            argb.set (((int) pixels[pixel] & 0xff) << 24); // alpha
+//	            argb += ((int) pixels[pixel + 1] & 0xff); // blue
+//	            argb += (((int) pixels[pixel + 2] & 0xff) << 8); // green
+//	            argb += (((int) pixels[pixel + 3] & 0xff) << 16); // red
+//	            result[row][col] = argb;
+//	            col++;
+//	            if (col == width) {
+//	               col = 0;
+//	               row++;
+//	            }
+//	         }
+//	      } else {
+//	         final int pixelLength = 3;
+//	         for (int pixel = 0, row = 0, col = 0; pixel < pixels.length; pixel += pixelLength) {
+//	            int argb = 0;
+//	            argb += -16777216; // 255 alpha
+//	            argb += ((int) pixels[pixel] & 0xff); // blue
+//	            argb += (((int) pixels[pixel + 1] & 0xff) << 8); // green
+//	            argb += (((int) pixels[pixel + 2] & 0xff) << 16); // red
+//	            result[row][col] = argb;
+//	            col++;
+//	            if (col == width) {
+//	               col = 0;
+//	               row++;
+//	            }
+//	         }
+//	      }
+//
+//	      return result;
+//	   }
 
 	public BufferedImage createCollageImage() {
 		if(this.fetchImages()) {
 			this.resizeImages();
+			
 			return this.combineImages();
 		}
 

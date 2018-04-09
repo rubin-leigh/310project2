@@ -32,23 +32,31 @@ public class MainController extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
     		throws ServletException, IOException  {
 				String topic = request.getParameter("topic");
-				Collage topicCollage = buildCollage(topic);
+				boolean borders = true;
+				boolean rotations = true;
+				String filter = "None";
+				String letters = "Test";
+				Collage topicCollage = buildCollage(topic, borders, rotations, filter, letters);
 				HttpSession session = request.getSession();
 				
-					ArrayList<Collage> previousList = getPreviousCollageList(session);
-					previousList.add((Collage) session.getAttribute("MainCollage"));
-					session.setAttribute("MainCollage", topicCollage);
-					request.getRequestDispatcher("/CollageViewerPage.jsp").forward(request, response);
-			
+				ArrayList<Collage> previousList = getPreviousCollageList(session);
+				previousList.add((Collage) session.getAttribute("MainCollage"));
+				session.setAttribute("MainCollage", topicCollage);
+				request.getRequestDispatcher("/CollageViewerPage.jsp").forward(request, response);
+		
 				return;
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
     		throws ServletException, IOException  {
 				String topic = request.getParameter("topic");
-				Collage topicCollage = buildCollage(topic);
+				boolean borders = true;
+				boolean rotations = true;
+				String filter = "None";
+				String letters = "Test";
+				Collage topicCollage = buildCollage(topic, borders, rotations, filter, letters);
 				HttpSession session = request.getSession();
-
+				
 				session.setAttribute("MainCollage", topicCollage);
 				ArrayList<Collage> previousList = createNewListForTesting();
 				session.setAttribute("PreviousCollageList", previousList);
@@ -60,12 +68,14 @@ public class MainController extends HttpServlet {
     }
 
 	//builds collage with String paramater topic
-	public Collage buildCollage(String topic){
-		CollageHandler ch = new CollageHandler(topic);
+	public Collage buildCollage(String topic, boolean borders, boolean rotations, String filter, String letters){
+		CollageHandler ch = new CollageHandler(topic, borders, rotations, filter, letters);
 		Collage c = ch.build();
 		return c;
 
 	}
+	
+	
 	
 	public ArrayList<Collage> createNewListForTesting() {
 		ArrayList<Collage> testList = new ArrayList<Collage>();

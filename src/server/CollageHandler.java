@@ -9,17 +9,25 @@ import javax.imageio.ImageIO;
 public class CollageHandler {
 
 	private String topic;
+	private boolean borders; 
+	private boolean rotations; 
+	private String filter; 
+	private String letters; 
 	private Collage newCollage;
 	private ImageTransform imageTransformer;
 
 	//initializes the CollageHandler with String parameter t for collage topic
-	public CollageHandler(String t){
+	public CollageHandler(String t, boolean borders, boolean rotations, String filter, String letters){
 		topic = t;
+		this.borders = borders; 
+		this.rotations = rotations;
+		this.filter = filter; 
+		this.letters = letters;
 	}
 
 	//builds collage with ImageTransform object and returns Collage object
 	public Collage build(){
-		imageTransformer = new ImageTransform(topic);
+		imageTransformer = new ImageTransform(topic, borders, rotations, filter, letters);
 		BufferedImage completeCollage = imageTransformer.createCollageImage();
 		Collage collageWrapper = new Collage();
 		collageWrapper.setTopic(topic);
