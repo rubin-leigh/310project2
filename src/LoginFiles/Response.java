@@ -1,20 +1,21 @@
 
 public class Response {
-	private int loginStatus;
-	private int completedStatus;
-	public int getLoginStatus() {
+	private String loginStatus;
+	private String completedStatus;
+	
+	public String getLoginStatus() {
 		return loginStatus;
 	}
 
-	public void setLoginStatus(int loginStatus) {
+	public void setLoginStatus(String loginStatus) {
 		this.loginStatus = loginStatus;
 	}
 
-	public int getCompletedStatus() {
+	public String getCompletedStatus() {
 		return completedStatus;
 	}
 
-	public void setCompletedStatus(int completedStatus) {
+	public void setCompletedStatus(String completedStatus) {
 		this.completedStatus = completedStatus;
 	} 
 	
