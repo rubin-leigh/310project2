@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 public class JDBC {
 	Connection conn;
 	private static final String selectUserName = "SELECT * FROM USERS WHERE USERNAME=?";
@@ -35,7 +37,9 @@ public class JDBC {
 			ps.setString(1, userName);
 			ResultSet result = ps.executeQuery();
 			while(result.next()) {
-				if(result.getString(3).equals(password)) {
+				String hash = result.getString(3);
+				String salt = result.getString(4);
+				if(hash.equals(BCrypt.hashpw(password, salt))) {
 					
 					return 0;
 				}
