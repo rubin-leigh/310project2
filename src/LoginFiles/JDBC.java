@@ -88,7 +88,7 @@ public class JDBC {
 		PreparedStatement ps;
 
 		//username doesn't already exist
-		if (checkNewUser(userName)){ 
+		if (!checkNewUser(userName)){ 
 			try {
 			String insertUser = "INSERT INTO Users (userName, pw) VALUES ('"+userName+"', '"+password+"')";
 
