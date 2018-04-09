@@ -1,4 +1,3 @@
-package LoginFiles;
 
 public class Response {
 	private int loginStatus;
