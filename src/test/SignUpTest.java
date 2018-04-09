@@ -34,7 +34,7 @@ public class SignUpTest {
 		Mockito.when(request.getParameter("password")).thenReturn("password");
 		Mockito.when(request.getSession()).thenReturn(session);
 		Mockito.when(response.getWriter()).thenReturn(pw);
-		LoginServlet ls = new LoginServlet();
+		SignUpServlet ls = new SignUpServlet();
 		try {
 			ls.service(request, response);
 			assertEquals(ls.getLoginStatus(), 0);
@@ -57,7 +57,7 @@ public class SignUpTest {
 		Mockito.when(request.getParameter("password")).thenReturn("blah");
 		Mockito.when(request.getSession()).thenReturn(session);
 		Mockito.when(response.getWriter()).thenReturn(pw);
-		LoginServlet ls = new LoginServlet();
+		SignUpServlet ls = new SignUpServlet();
 		try {
 			ls.service(request, response);
 			assertEquals(ls.getLoginStatus(), 2);
@@ -75,7 +75,7 @@ public class SignUpTest {
 		Mockito.when(request.getParameter("password")).thenReturn("wrong");
 		Mockito.when(request.getSession()).thenReturn(session);
 		Mockito.when(response.getWriter()).thenReturn(pw);
-		LoginServlet ls = new LoginServlet();
+		SignUpServlet ls = new SignUpServlet();
 		try {
 			ls.service(request, response);
 			assertEquals(ls.getLoginStatus(), 1);
@@ -94,7 +94,7 @@ public class SignUpTest {
 		Mockito.when(request.getParameter("password")).thenReturn("");
 		Mockito.when(request.getSession()).thenReturn(session);
 		Mockito.when(response.getWriter()).thenReturn(pw);
-		LoginServlet ls = new LoginServlet();
+		SignUpServlet ls = new SignUpServlet();
 		try {
 			ls.service(request, response);
 			assertEquals(ls.getOtherErr(), 1);
@@ -113,7 +113,7 @@ public class SignUpTest {
 		Mockito.when(request.getParameter("password")).thenReturn("");
 		Mockito.when(request.getSession()).thenReturn(session);
 		Mockito.when(response.getWriter()).thenReturn(pw);
-		LoginServlet ls = new LoginServlet();
+		SignUpServlet ls = new SignUpServlet();
 		try {
 			ls.service(request, response);
 			assertEquals(ls.getOtherErr(), 3);
@@ -132,7 +132,7 @@ public class SignUpTest {
 		Mockito.when(request.getParameter("password")).thenReturn("d");
 		Mockito.when(request.getSession()).thenReturn(session);
 		Mockito.when(response.getWriter()).thenReturn(pw);
-		LoginServlet ls = new LoginServlet();
+		SignUpServlet ls = new SignUpServlet();
 		try {
 			ls.service(request, response);
 			assertEquals(ls.getOtherErr(), 2);
@@ -151,7 +151,7 @@ public class SignUpTest {
 		Mockito.when(request.getParameter("password")).thenReturn("d");
 		Mockito.when(request.getSession()).thenReturn(session);
 		Mockito.when(response.getWriter()).thenReturn(pw);
-		LoginServlet ls = new LoginServlet();
+		SignUpServlet ls = new SignUpServlet();
 		try {
 			ls.service(request, response);
 			assertEquals(ls.getOtherErr(), 0);
