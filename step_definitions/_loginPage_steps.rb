@@ -1,5 +1,5 @@
 Given(/^we are on the login page$/) do
-  visit "localhost:8080/310project2/Login.jsp"
+  visit "https://localhost:8443/310Project2/Login.jsp"
 end
 
 When(/^I enter a correct username$/) do
@@ -15,7 +15,7 @@ Then(/^click Log In button$/) do
 end
 
 Then(/^I should be on the CollageViewerPage$/) do
-  expect(page).to have_content("User Page")
+  expect(page).to have_content("Collage For Topic")
 end
 
 When(/^I enter an incorrect username$/) do
@@ -27,5 +27,5 @@ When(/^I enter an incorrect password$/) do
 end
 
 Then(/^I should still be on the login page$/) do
-  expect(page).to have_content("Login Page")
+  expect(page).to have_content("Login Invalid username")
 end
