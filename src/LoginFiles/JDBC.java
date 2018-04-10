@@ -14,7 +14,7 @@ public class JDBC {
 	public JDBC () {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			String connectionString = "jdbc:mysql://localhost:3306/CollageMaker?user=root&password=Sports12&useSSL=true";
+			String connectionString = "jdbc:mysql://localhost:3306/CollageMaker?user=root&password=password&useSSL=true";
 			conn = DriverManager.getConnection(connectionString);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
