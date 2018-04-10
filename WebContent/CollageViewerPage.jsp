@@ -26,6 +26,7 @@
 			//function to send the topic to the back end and build the collage then send the user to the next page
 			function buildCollage()
 			{
+				console.log("running this");
 	        		var xhttp = new XMLHttpRequest();
 	        		var url = "MainController?topic="+document.getElementById("topic").value+"&first=false&shape="+document.getElementById("shape").value+"&first=false";
 	            	xhttp.open("GET", url, false);
@@ -45,26 +46,29 @@
 		
 		<body>
 			<div id="entirePage">
-				<!-- Div to hold the previos collage picker with divs to hold each image -->
-				<div id="container" >
-					  
-				</div>
 				
 				<!-- Title at top of the page -->
-				<h1>Collage For Topic </h1>
+				<%if (mainCollage != null) { %>
+				<h1>Collage For Topic <%= mainCollage.getTopic() %></h1>\
+				<%} %>
 				<!-- Div to hold the main collage viewing area -->
 				
 				<div class="MainCollageView">
 					<!-- Div to hold image that populates the main collage viewer area -->
-					<img onclick="exb()" id="mainCollage" src="data:image/png;base64," width="100%" height="100%"/>
+					<%if (mainCollage != null) { %>
+					<img onclick="exb()" id="mainCollage" src="data:image/png;base64,<%= mainCollage.getImage() %>" width="100%" height="100%"/>
+					<%} else { %>
+					<div id="emptyImage">
+					</div>
+					<%}%>
 				</div>
 				
 				<!-- Div to hold all of the buttons and input fields -->
 				<form class="BuildAnotherCollageForm">
 						<div id="left">
-						<label><input type="text" id="topic" name="topic" class="input" placeholder="Enter Topic" oninput="IsEmpty()"  disable onsubmit="buildCollage()"></label>
+						<label><input type="text" id="topic" name="topic" class="input" placeholder="Enter Topic" oninput="IsEmpty()"  onsubmit="buildCollage()"></label>
 
-						<label><input type="text" id="shape" name="shape" class="input" placeholder="Enter Shape" oninput="IsEmpty()"  disable onsubmit="buildCollage()"></br></label>
+						<label><input type="text" id="shape" name="shape" class="input" placeholder="Enter Shape" oninput="IsEmpty()"   onsubmit="buildCollage()"></br></label>
 						<label><input type="submit" id="submitButton" class="buttons" value="Build Collage"></label>
 						</div>
 
@@ -92,6 +96,10 @@
 						
 	
 					</form>
+									<!-- Div to hold the previos collage picker with divs to hold each image -->
+				<div id="container" >
+					  
+				</div>
 				
 				
 			</div>
