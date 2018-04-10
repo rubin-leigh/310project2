@@ -2,6 +2,7 @@
  * 
  */
 
+
 document.addEventListener("DOMContentLoaded", function() {
 	var form = document.getElementById("login-form");
 	$(form).submit(function(event) {
