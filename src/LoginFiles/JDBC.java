@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 public class JDBC {
 	Connection conn;
 	private static final String selectUserName = "SELECT * FROM USERS WHERE USERNAME=?";
@@ -12,7 +14,7 @@ public class JDBC {
 	public JDBC () {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			String connectionString = "jdbc:mysql://localhost:3306/CollageMaker?user=root&password=password&useSSL=true";
+			String connectionString = "jdbc:mysql://localhost:3306/CollageMaker?user=root&password=Sports12&useSSL=true";
 			conn = DriverManager.getConnection(connectionString);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -36,7 +38,9 @@ public class JDBC {
 			ps.setString(1, userName);
 			ResultSet result = ps.executeQuery();
 			while(result.next()) {
-				if(result.getString(3).equals(password)) {
+				String hash = result.getString(3);
+				String salt = result.getString(4);
+				if(hash.equals(BCrypt.hashpw(password, salt))) {
 					
 					return "successful";
 				}
@@ -81,7 +85,7 @@ public class JDBC {
 	}
 
 	public String makeNewUser(String userName, String password) {
-		PreparedStatement ps;
+		PreparedStatement ps = null;
 
 		//username doesn't already exist
 		if (!checkNewUser(userName)){ 
@@ -96,7 +100,7 @@ public class JDBC {
 				System.out.println(e.getMessage());
 			} finally {
 				if (ps != null) {
-					ps.close();
+					//ps.close();
 				}
 			}
 
@@ -107,7 +111,7 @@ public class JDBC {
 			return "UsernameExists";
 		}
 
-		return "UsernameExists";
+		//return "UsernameExists";
 		
 	}
 }
