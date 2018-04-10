@@ -1,7 +1,9 @@
+package LoginFiles;
 
 public class Response {
 	private String loginStatus;
 	private String completedStatus;
+	private String signUpStat;
 	
 	public String getLoginStatus() {
 		return loginStatus;
@@ -19,6 +21,12 @@ public class Response {
 		this.completedStatus = completedStatus;
 	} 
 	
-	
+	public String getsignUpStatus() {
+		return signUpStat;
+	}
+
+	public void setSignUpStatus(String signUpStatus) {
+		this.signUpStat = signUpStatus;
+	}
 	
 }

@@ -75,13 +75,7 @@ public class SignUpServlet extends HttpServlet {
 		
 	}
 
-	public String getsignUpStatus() {
-		return signUpStat;
-	}
-
-	public void setSignUpStatus(String signUpStatus) {
-		this.signUpStat = signUpStatus;
-	}
+	
 
 	public String getOtherErr() {
 		return otherErr;

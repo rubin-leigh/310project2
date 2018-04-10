@@ -14,7 +14,7 @@ public class JDBC {
 	public JDBC () {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			String connectionString = "jdbc:mysql://localhost:3306/CollageMaker?user=root&password=password&useSSL=true";
+			String connectionString = "jdbc:mysql://localhost:3306/CollageMaker?user=root&password=&useSSL=true";
 			conn = DriverManager.getConnection(connectionString);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -90,7 +90,9 @@ public class JDBC {
 		//username doesn't already exist
 		if (!checkNewUser(userName)){ 
 			try {
-			String insertUser = "INSERT INTO Users (userName, pw) VALUES ('"+userName+"', '"+password+"')";
+				String salt = BCrypt.gensalt();
+				String hash = BCrypt.hashpw(password, salt);
+			String insertUser = "INSERT INTO Users (userName, pw, salt) VALUES ('"+userName+"', '"+hash+"', '" + salt + "')";
 
 			ps = conn.prepareStatement(insertUser);
 			ps.executeUpdate();

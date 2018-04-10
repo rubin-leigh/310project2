@@ -17,8 +17,9 @@ document.addEventListener("DOMContentLoaded", function() {
 		
         }).done(function(data) {
         	data = JSON.parse(data);
-        	var signUpStatus = data.signUpStatus;
+        	var signUpStatus = data.signUpStat;
         	var completedStatus = data.completedStatus;
+        	console.log("inside the event listener");
         	$("#error1").addClass("hidden");
         	$("#error1").text("Invalid username");
     		$("#error2").addClass("hidden");
@@ -28,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function() {
         		window.location.href = "CollageViewerPage.jsp";
         	} else if (signUpStatus === "bothIncomplete") {
         		$("#error2").removeClass("hidden");
-        	} else if (signUpStatus === "incompleteUsername"){
+        	} else if (signUpStatus === "UsernameExists"){
         		$("#error1").removeClass("hidden");
         	}
         	if (completedStatus === "bothIncomplete") {
@@ -38,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function() {
         		$("#error2").removeClass("hidden");
         		$("#error2").text("Please enter password");
         		
-        	} else if (completedStatus === "incompleteUsername") {
+        	} else if (completedStatus === "UsernameExists") {
         		$("#error1").removeClass("hidden");
         		$("#error1").text("Please enter username");
         		//show missing username

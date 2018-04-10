@@ -56,7 +56,7 @@ public class LoginServlet extends HttpServlet {
 		} else {
 			res.setCompletedStatus("complete");
 			setOtherErr("complete");
-		}.
+		}
 		res.setLoginStatus(loginStatus);
 		loginStat = loginStatus;
 		if (loginStatus.equals("successful")) {		

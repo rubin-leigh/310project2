@@ -31,11 +31,10 @@ public class TestCollageModification {
 	@Test
 	public void TestLetterCreation() throws IOException {
 
-		ImageTransform it = new ImageTransform("test", true, true, "None", "Test");
+		ImageTransform it = new ImageTransform("test");
 		String testString = "test";
-		BufferedImage textImage = it.convertToTextImage();
+		BufferedImage textImage = it.convertToTextImage(new BufferedImage, testString);
 		assertNotNull(textImage);
 		
 	}
-	
 }

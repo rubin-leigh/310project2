@@ -4,7 +4,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<link rel="stylesheet" href="SignUp.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-		<script type="text/javascript" src="logins.js"></script>
+		<script type="text/javascript" src="SignUp.js"></script>
 		<title>Sign Up Page</title>
 	</head>
 	
@@ -22,7 +22,7 @@
 				<label id="error2" class="hidden error">Invalid Password</label>
 				</br>
 				<input type="password" id="pWord" name="password" class="pWord" placeholder="Password"></br></br>
-				<input type="submit" id="signupButton" class="loginButtonClass" value="Sign Up">
+				<input type="submit" id="signupButton" class="signupButtonClass" value="Sign Up">
 			</form>
 		</div>
 	
