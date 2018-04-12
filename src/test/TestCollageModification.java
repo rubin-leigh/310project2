@@ -22,7 +22,7 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
-import JUnit.JUnit;
+
 
 import static org.junit.Assert.*;
 
@@ -33,7 +33,7 @@ public class TestCollageModification {
 
 		ImageTransform it = new ImageTransform("test", true, true, "None", "");
 		String testString = "test";
-		BufferedImage textImage = it.convertToTextImage(new BufferedImage, testString);
+		BufferedImage textImage = it.convertToTextImage(new BufferedImage(null, null, false, null));
 		assertNotNull(textImage);
 		
 	}

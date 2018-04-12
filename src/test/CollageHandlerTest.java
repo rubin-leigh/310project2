@@ -1,5 +1,5 @@
 package test;
-
+  
 import static org.junit.Assert.assertEquals;
 
 import java.awt.Color;
@@ -35,14 +35,14 @@ public class CollageHandlerTest {
 	// tests the CollageHandler constructor
 	@Test
 	public void testConstructor() {
-		CollageHandler collageHandler = new CollageHandler("test");
+		CollageHandler collageHandler = new CollageHandler("test",true,true,"filter","letters");
 		assertThat(collageHandler, instanceOf(CollageHandler.class));
 	}
 	
 	// tests the CollageHandler class's method to encode BufferedImage objects as base64 encoded Strings
 	@Test
 	public void testConvertBufferedImageToBase64() {
-		CollageHandler collageHandler = new CollageHandler("test");
+		CollageHandler collageHandler = new CollageHandler("test",true,true,"filter","letters");
 		BufferedImage testImage = generateInsufficientNumberImage();
 		
 		String convertedImage = collageHandler.convertBufferedImageToBase64(testImage);

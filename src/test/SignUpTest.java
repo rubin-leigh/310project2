@@ -1,5 +1,5 @@
 package test;
-
+  
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -24,20 +24,20 @@ import com.google.gson.Gson;
 public class SignUpTest {
 	
 	@Test
-	public void TestLoginSuccessful() throws IOException {
+	public void TestSignUpSuccessful() throws IOException {
 		
 		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
 		HttpServletResponse response = Mockito.mock(HttpServletResponse.class);
 		HttpSession session = Mockito.mock(HttpSession.class);
 		PrintWriter pw = Mockito.mock(PrintWriter.class);
-		Mockito.when(request.getParameter("username")).thenReturn("dan");
+		Mockito.when(request.getParameter("username")).thenReturn("john");
 		Mockito.when(request.getParameter("password")).thenReturn("password");
 		Mockito.when(request.getSession()).thenReturn(session);
 		Mockito.when(response.getWriter()).thenReturn(pw);
 		SignUpServlet ls = new SignUpServlet();
 		try {
 			ls.service(request, response);
-			assertEquals(ls.getLoginStatus(), 0);
+			assertEquals(ls.getSignUpStat(), "successful");
 		} catch (ServletException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -48,37 +48,37 @@ public class SignUpTest {
 	}
 	
 	@Test
-	public void TestLoginBadUserName() throws IOException {
+	public void TestSignUpBadUserName() throws IOException {
 		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
 		HttpServletResponse response = Mockito.mock(HttpServletResponse.class);
 		HttpSession session = Mockito.mock(HttpSession.class);
 		PrintWriter pw = Mockito.mock(PrintWriter.class);
-		Mockito.when(request.getParameter("username")).thenReturn("wrong");
+		Mockito.when(request.getParameter("username")).thenReturn("dan");
 		Mockito.when(request.getParameter("password")).thenReturn("blah");
 		Mockito.when(request.getSession()).thenReturn(session);
 		Mockito.when(response.getWriter()).thenReturn(pw);
 		SignUpServlet ls = new SignUpServlet();
 		try {
 			ls.service(request, response);
-			assertEquals(ls.getLoginStatus(), 2);
+			assertEquals(ls.getSignUpStat(), "incompleteUsername");
 		} catch (ServletException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	public void TestLoginBadPassword() throws IOException {
+	public void TestSignUpBadPassword() throws IOException {
 		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
 		HttpServletResponse response = Mockito.mock(HttpServletResponse.class);
 		HttpSession session = Mockito.mock(HttpSession.class);
 		PrintWriter pw = Mockito.mock(PrintWriter.class);
-		Mockito.when(request.getParameter("username")).thenReturn("dan");
-		Mockito.when(request.getParameter("password")).thenReturn("wrong");
+		Mockito.when(request.getParameter("username")).thenReturn("leigh");
+		Mockito.when(request.getParameter("password")).thenReturn("");
 		Mockito.when(request.getSession()).thenReturn(session);
 		Mockito.when(response.getWriter()).thenReturn(pw);
 		SignUpServlet ls = new SignUpServlet();
 		try {
 			ls.service(request, response);
-			assertEquals(ls.getLoginStatus(), 1);
+			assertEquals(ls.getSignUpStat(), "incompletePassword");
 		} catch (ServletException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -97,7 +97,7 @@ public class SignUpTest {
 		SignUpServlet ls = new SignUpServlet();
 		try {
 			ls.service(request, response);
-			assertEquals(ls.getOtherErr(), 1);
+			assertEquals(ls.getOtherErr(), "bothImcomplete");
 		} catch (ServletException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -135,26 +135,7 @@ public class SignUpTest {
 		SignUpServlet ls = new SignUpServlet();
 		try {
 			ls.service(request, response);
-			assertEquals(ls.getOtherErr(), 2);
-		} catch (ServletException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	@Test
-	public void TestSignUpNotEmpty() throws IOException {
-		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
-		HttpServletResponse response = Mockito.mock(HttpServletResponse.class);
-		HttpSession session = Mockito.mock(HttpSession.class);
-		PrintWriter pw = Mockito.mock(PrintWriter.class);
-		Mockito.when(request.getParameter("username")).thenReturn("d");
-		Mockito.when(request.getParameter("password")).thenReturn("d");
-		Mockito.when(request.getSession()).thenReturn(session);
-		Mockito.when(response.getWriter()).thenReturn(pw);
-		SignUpServlet ls = new SignUpServlet();
-		try {
-			ls.service(request, response);
-			assertEquals(ls.getOtherErr(), 0);
+			assertEquals(ls.getOtherErr(), "incompleteUsername");
 		} catch (ServletException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -176,12 +157,12 @@ public class SignUpTest {
 	@Test
 	public void TestJDBCMakeNewUserCorrect() {
 		JDBC jdbc = new JDBC();
-		assertEquals(jdbc.checkNewUser("newUser","newPass"), "succesful");
+		assertEquals(jdbc.checkNewUser("newUser"), "succesful");
 	}
 	@Test
 	public void TestJDBCMakeNewUserWrong() {
 		JDBC jdbc = new JDBC();
-		assertEquals(jdbc.checkNewUser("dan","newPass"), "usernameExists");
+		assertEquals(jdbc.checkNewUser("dan"), "usernameExists");
 	}
 	
 	
