@@ -181,14 +181,14 @@ public class LoginTest {
 	@Test
 	public void TestResponseCompleted() {
 		Response res = new Response();
-		res.setCompletedStatus(3);
-		assertEquals(res.getCompletedStatus(), 3);
+		res.setCompletedStatus("successful");
+		assertEquals(res.getCompletedStatus(), "successful");
 	}
 	@Test
 	public void TestResponseLoginStatus() {
 		Response res = new Response();
-		res.setLoginStatus(3);
-		assertEquals(res.getLoginStatus(), 3);
+		res.setLoginStatus("successful");
+		assertEquals(res.getLoginStatus(), "successful");
 	}
 	
 }

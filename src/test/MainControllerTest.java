@@ -34,7 +34,7 @@ public class MainControllerTest {
         Mockito.when(request.getSession()).thenReturn(session);
         Mockito.when(request.getRequestDispatcher("/CollageViewerPage.jsp")).thenReturn(rd);
         Collage mainCollage = new Collage();
-        Mockito.when(mainControllerSpy.buildCollage("Cat")).thenReturn(mainCollage);
+        Mockito.when(mainControllerSpy.buildCollage("Cat",true,true,"sepia","letters")).thenReturn(mainCollage);
         ArrayList<Collage> previousCollageListTest = new ArrayList<Collage>();
         Mockito.when(mainControllerSpy.getPreviousCollageList(session)).thenReturn(previousCollageListTest);
         
@@ -64,7 +64,7 @@ public class MainControllerTest {
         Mockito.when(request.getSession()).thenReturn(session);
         Mockito.when(request.getRequestDispatcher("/CollageViewerPage.jsp")).thenReturn(rd);
         Collage mainCollage = new Collage();
-        Mockito.when(mainControllerSpy.buildCollage("Cat")).thenReturn(mainCollage);
+        Mockito.when(mainControllerSpy.buildCollage("Cat",true,true,"sepia","letters")).thenReturn(mainCollage);
         ArrayList<Collage> previousCollageListTest = new ArrayList<Collage>();
         Mockito.when(mainControllerSpy.createNewListForTesting()).thenReturn(previousCollageListTest);
         
@@ -89,7 +89,7 @@ public class MainControllerTest {
     		Collage testCollage = new Collage();
     		Mockito.when(ch.build()).thenReturn(testCollage);
     		
-    		Collage producedCollage = mainController.buildCollage("Cat");
+    		Collage producedCollage = mainController.buildCollage("Cat",true,true,"sepia","letters");
     		assertThat(producedCollage, instanceOf(Collage.class));
     }
     
