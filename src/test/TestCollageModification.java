@@ -31,7 +31,7 @@ public class TestCollageModification {
 	@Test
 	public void TestLetterCreation() throws IOException {
 
-		ImageTransform it = new ImageTransform("test");
+		ImageTransform it = new ImageTransform("test", true, true, "None", "");
 		String testString = "test";
 		BufferedImage textImage = it.convertToTextImage(new BufferedImage, testString);
 		assertNotNull(textImage);

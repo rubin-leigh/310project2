@@ -32,14 +32,35 @@ public class MainController extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
     		throws ServletException, IOException  {
 				String topic = request.getParameter("topic");
-				boolean borders = true;
-				boolean rotations = true;
-				String filter = "None";
-				String letters = "Test";
+				String first = request.getParameter("first");
+				String stringBorders = request.getParameter("borders");
+				boolean borders;
+				if(stringBorders.equals("true")) {
+					borders = true;
+				} else {
+					borders = false;
+				}
+				
+				String stringRotation = request.getParameter("rotations");
+				boolean rotations;
+				if (stringRotation.equals("true")) {
+					rotations = true;
+				} else {
+					rotations = false;
+				}
+				String filter = request.getParameter("filter");
+				String letters = request.getParameter("letters");
 				Collage topicCollage = buildCollage(topic, borders, rotations, filter, letters);
 				HttpSession session = request.getSession();
+				ArrayList<Collage> previousList;
+				if(first.equals("true")) {
+					previousList = new ArrayList<Collage>();
+					session.setAttribute("PreviousCollageList", previousList);
+				} else {
+					previousList = getPreviousCollageList(session);
+					
+				}
 				
-				ArrayList<Collage> previousList = getPreviousCollageList(session);
 				previousList.add((Collage) session.getAttribute("MainCollage"));
 				session.setAttribute("MainCollage", topicCollage);
 				request.getRequestDispatcher("/CollageViewerPage.jsp").forward(request, response);
