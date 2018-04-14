@@ -22,27 +22,26 @@ document.addEventListener("DOMContentLoaded", function() {
         	$("#error1").text("Invalid username");
     		$("#error2").addClass("hidden");
         	$("#error2").text("Invalid password");
-        	console.log(loginStatus);
-        	if (loginStatus === "successful") {
+        	if (loginStatus === 0) {
         		console.log("running this");
         		window.location.href = "CollageViewerPage.jsp";
-        	} else if (loginStatus === "bothIncomplete") {
+        	} else if (loginStatus === 1) {
         		$("#error2").removeClass("hidden");
         	} else if (loginStatus === 2){
         		$("#error1").removeClass("hidden");
         	}
-        	if (completedStatus === "bothIncomplete") {
+        	if (completedStatus === 1) {
         		//show both missing field errors
         		$("#error1").removeClass("hidden");
         		$("#error1").text("Please enter username");
         		$("#error2").removeClass("hidden");
         		$("#error2").text("Please enter password");
         		
-        	} else if (completedStatus === "incompleteUsername") {
+        	} else if (completedStatus === 2) {
         		$("#error1").removeClass("hidden");
         		$("#error1").text("Please enter username");
         		//show missing username
-        	} else if (completedStatus === "incompletePassword") {
+        	} else if (completedStatus === 3) {
         		$("#error2").removeClass("hidden");
         		$("#error2").text("Please enter password");
         		//show missing password

@@ -1,6 +1,7 @@
 package server;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -12,13 +13,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
+
 /**
  * Servlet implementation class MainController
  */
 @WebServlet("/MainController")
 public class MainController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	private String topic;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -32,6 +35,8 @@ public class MainController extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
     		throws ServletException, IOException  {
 				String topic = request.getParameter("topic");
+				this.setTopic(topic);
+				System.out.println(topic);
 				String first = request.getParameter("first");
 				String stringBorders = request.getParameter("borders");
 				boolean borders;
@@ -63,8 +68,13 @@ public class MainController extends HttpServlet {
 				
 				previousList.add((Collage) session.getAttribute("MainCollage"));
 				session.setAttribute("MainCollage", topicCollage);
-				request.getRequestDispatcher("/CollageViewerPage.jsp").forward(request, response);
-		
+				imageResponse ir = new imageResponse();
+				ir.setImage(topicCollage);
+				Gson gson = new Gson();
+				String imageResponse = gson.toJson(ir);
+				PrintWriter out = response.getWriter();
+				out.println(imageResponse);
+				//request.getRequestDispatcher("/CollageViewerPage.jsp").forward(request, response);
 				return;
     }
 
@@ -81,7 +91,7 @@ public class MainController extends HttpServlet {
 				session.setAttribute("MainCollage", topicCollage);
 				ArrayList<Collage> previousList = createNewListForTesting();
 				session.setAttribute("PreviousCollageList", previousList);
-
+				
 				RequestDispatcher view = request.getRequestDispatcher("/CollageViewerPage.jsp");
 				view.forward(request, response);
 
@@ -108,5 +118,13 @@ public class MainController extends HttpServlet {
 		ArrayList<Collage> previousCollageList = new ArrayList<Collage>();
 		previousCollageList = (ArrayList<Collage>) session.getAttribute("PreviousCollageList");
 		return previousCollageList;
+	}
+
+	public String getTopic() {
+		return topic;
+	}
+
+	public void setTopic(String topic) {
+		this.topic = topic;
 	}
 }
