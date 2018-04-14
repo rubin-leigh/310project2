@@ -7,7 +7,11 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
+import java.awt.Shape;
+import java.awt.font.FontRenderContext;
+import java.awt.font.GlyphVector;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
@@ -113,8 +117,11 @@ public class ImageTransform {
 	public BufferedImage createCollageImage() {
 		if(this.fetchImages()) {
 			this.resizeImages();
-			
-			return this.combineImages();
+			this.combineImages();
+			if (this.letters != "")
+				return this.generateTextImage();
+			else
+				return this.completeImage;
 		}
 
 		return this.generateInsufficientNumberImage();
@@ -296,21 +303,29 @@ public class ImageTransform {
 				Image tmp = image.getScaledInstance((int)COLLAGE_WIDTH, (int)COLLAGE_HEIGHT, Image.SCALE_SMOOTH);
 				BufferedImage resizedImage = new BufferedImage((int)COLLAGE_WIDTH, (int)COLLAGE_HEIGHT, BufferedImage.TYPE_INT_ARGB);
 
-				this.borderImage(resizedImage);
+				if(borders)
+				{
+					this.borderImage(resizedImage);
+				}
 
 				Graphics2D g2d = resizedImage.createGraphics();
 				g2d.drawImage(tmp, 0, 0, null);
 				g.drawImage(resizedImage, 0, 0, null);
 			}
 			else {
-				this.borderImage(image);
+				if(borders)
+				{
+					this.borderImage(image);
+				}
 				AffineTransform backup = g.getTransform();
 				AffineTransform imageRotator = new AffineTransform();
 				int rotationAmount = generateRotationAmount();
-
-				imageRotator.rotate(Math.toRadians(rotationAmount), image.getWidth()/2, image.getHeight()/2);
-
-				g.transform(imageRotator);
+				
+				if(rotations)
+				{
+					imageRotator.rotate(Math.toRadians(rotationAmount), image.getWidth()/2, image.getHeight()/2);
+					g.transform(imageRotator);
+				}
 
 				// randomly generates the location of the next image on the collage within the bounds of the collage
 				x = rand.nextInt(COLLAGE_WIDTH-600)+300;
@@ -328,6 +343,38 @@ public class ImageTransform {
 		}
 		this.completeImage = collageImage;
 		return collageImage;
+	}
+	
+	public BufferedImage generateTextImage()
+	{
+		BufferedImage originalImage = this.completeImage;
+        final BufferedImage textImage = new BufferedImage(
+            originalImage.getWidth(),
+            originalImage.getHeight(),
+            BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = textImage.createGraphics();
+        FontRenderContext frc = g.getFontRenderContext();
+        int fontSize = 1250/letters.length();
+        Font font = new Font(Font.MONOSPACED, Font.BOLD, fontSize);
+        GlyphVector gv = font.createGlyphVector(frc, letters);
+        Rectangle2D box = gv.getVisualBounds();
+        int xOff = 25+(int)-box.getX();
+        int yOff = 35*letters.length()+(int)-box.getY();
+        Shape shape = gv.getOutline(xOff,yOff);
+        g.setClip(shape);
+        g.drawImage(originalImage,0,0,null);
+        g.setClip(null);
+        g.setStroke(new BasicStroke(2f));
+        g.setColor(Color.BLACK);
+        g.setRenderingHint(
+            RenderingHints.KEY_ANTIALIASING,
+            RenderingHints.VALUE_ANTIALIAS_ON);
+        g.draw(shape);
+
+        g.dispose();
+
+        this.completeImage = textImage;
+        return textImage;
 	}
 
 	// generates the buffered image that is exported when there is an insufficient number of images found
