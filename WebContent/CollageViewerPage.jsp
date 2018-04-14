@@ -51,6 +51,7 @@
 		var data = xhttp.responseText;
 		data = JSON.parse(data);
 		document.getElementById("mainCollage").src = "data:image/png;base64," + data.image.image; 
+		document.getElementById("header").innerHTML = "Collage for Topic " + data.image.topic;
 		//update collage for...
 		//update image
 		//update previous collages
@@ -78,9 +79,9 @@
 		<%
 			//if (mainCollage != null) {
 		%>
-		<h1>
-			Collage For Topic
-			</h1>
+		<h1 id="header">
+
+		</h1>
 		<%
 			//}
 		%>
