@@ -41,16 +41,41 @@
 	{
 		console.log("topic: " + document.getElementById("topic").value);
 		var xhttp = new XMLHttpRequest();
+		
+		var borderRadios = document.getElementsByName("border");
+		var borderValue = "false";
+		for (var i = 0, length = borderRadios.length; i < length; i++)
+		{
+			if (borderRadios[i].checked)
+			{
+		  		if (borderRadios[i].value == "borderOn")
+			  		borderValue = "true";
+		  		break;
+		 	}
+		}
+		
+		var rotateRadios = document.getElementsByName("rotations");
+		var rotateValue = "false";
+		for (var i = 0, length = rotateRadios.length; i < length; i++)
+		{
+			if (rotateRadios[i].checked)
+			{
+		  		if (rotateRadios[i].value == "rotateOn")
+			  		rotateValue = "true";
+		  		break;
+		 	}
+		}
+		
 		var url = "MainController?topic="
 				+ document.getElementById("topic").value
 				+ "&first=" + firstTime + "&letters="
 				+ document.getElementById("shape").value
-				+ "&borders=true&filter=None&rotations=true";
+				+ "&borders=" + borderValue + "&filter=None&rotations=" + rotateValue;
 		xhttp.open("GET", url, false);
 		xhttp.send();
 		var data = xhttp.responseText;
 		data = JSON.parse(data);
-		document.getElementById("mainCollage").src = "data:image/png;base64," + data.image.image; 
+		document.getElementById("mainCollage").src = "data:image/png;base64," + data.image.image;
 		document.getElementById("header").innerHTML = "Collage for Topic " + data.image.topic;
 		//update collage for...
 		//update image
@@ -80,7 +105,7 @@
 			//if (mainCollage != null) {
 		%>
 		<h1 id="header">
-
+		
 		</h1>
 		<%
 			//}

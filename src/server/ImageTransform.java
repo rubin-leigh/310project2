@@ -1,5 +1,6 @@
 package server;
 
+import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.image.DataBufferByte;
 import java.awt.Color;
@@ -135,7 +136,7 @@ public class ImageTransform {
 			// maintain count of number of results fetched from API
 			int resultNum = 0;
 			// initially fetch 40 images in case of bad/undownloadable links
-			for(int i = 0; i < 4; i++) {
+			for(int i = 0; i < 5; i++) {
 				URL requestURL = generateRequestURL(resultNum, "");
 
 				HttpURLConnection connection = getConnectionFromRequestURL(requestURL);
@@ -155,7 +156,9 @@ public class ImageTransform {
 						}
 					}
 				}
-
+				if(this.retrievedImages.size() >= 30)
+					break;
+				
 				connection.disconnect();
 				resultNum += 10;
 			}
@@ -246,8 +249,8 @@ public class ImageTransform {
 			double scaledWidth = (originalWidth/scaleFactor);
 			double scaledHeight = (originalHeight/scaleFactor);
 
-			Image tmp = originalImage.getScaledInstance((int)scaledWidth, (int)scaledHeight, Image.SCALE_SMOOTH);
-			BufferedImage resizedImage = new BufferedImage((int)scaledWidth, (int)scaledHeight, BufferedImage.TYPE_INT_ARGB);
+			Image tmp = originalImage.getScaledInstance((int)150, (int)150, Image.SCALE_SMOOTH);
+			BufferedImage resizedImage = new BufferedImage((int)150, (int)150, BufferedImage.TYPE_INT_ARGB);
 
 			Graphics2D g2d = resizedImage.createGraphics();
 			g2d.drawImage(tmp, 0, 0, null);
@@ -299,20 +302,20 @@ public class ImageTransform {
 		int imageNum = 0;
 		Random rand = new Random();
 		for(BufferedImage image : this.retrievedImages) {
-			if (imageNum == 0) {
-				Image tmp = image.getScaledInstance((int)COLLAGE_WIDTH, (int)COLLAGE_HEIGHT, Image.SCALE_SMOOTH);
-				BufferedImage resizedImage = new BufferedImage((int)COLLAGE_WIDTH, (int)COLLAGE_HEIGHT, BufferedImage.TYPE_INT_ARGB);
-
-				if(borders)
-				{
-					this.borderImage(resizedImage);
-				}
-
-				Graphics2D g2d = resizedImage.createGraphics();
-				g2d.drawImage(tmp, 0, 0, null);
-				g.drawImage(resizedImage, 0, 0, null);
-			}
-			else {
+//			if (imageNum == 0) {
+//				Image tmp = image.getScaledInstance((int)COLLAGE_WIDTH, (int)COLLAGE_HEIGHT, Image.SCALE_SMOOTH);
+//				BufferedImage resizedImage = new BufferedImage((int)COLLAGE_WIDTH, (int)COLLAGE_HEIGHT, BufferedImage.TYPE_INT_ARGB);
+//
+//				if(borders)
+//				{
+//					this.borderImage(resizedImage);
+//				}
+//
+//				Graphics2D g2d = resizedImage.createGraphics();
+//				g2d.drawImage(tmp, 0, 0, null);
+//				g.drawImage(resizedImage, 0, 0, null);
+//			}
+//			else {
 				if(borders)
 				{
 					this.borderImage(image);
@@ -323,16 +326,20 @@ public class ImageTransform {
 				
 				if(rotations)
 				{
-					imageRotator.rotate(Math.toRadians(rotationAmount), image.getWidth()/2, image.getHeight()/2);
-					g.transform(imageRotator);
+					image = rotateImage(image,rotationAmount);
+					//imageRotator.rotate(Math.toRadians(rotationAmount), image.getWidth()/2, image.getHeight()/2);
+					//g.transform(imageRotator);
 				}
 
 				// randomly generates the location of the next image on the collage within the bounds of the collage
-				x = rand.nextInt(COLLAGE_WIDTH-600)+300;
-				y = rand.nextInt(COLLAGE_HEIGHT-500)+200;
+				//x = rand.nextInt(COLLAGE_WIDTH-600)+300;
+				//y = rand.nextInt(COLLAGE_HEIGHT-500)+200;
+				
+				x = 25+(imageNum%10)*102;
+				y = 25+(imageNum/10)*175;
 				g.drawImage(image, null,x, y);
 				g.setTransform(backup);
-			}
+//			}
 
 			imageNum++;
 		}
@@ -354,12 +361,12 @@ public class ImageTransform {
             BufferedImage.TYPE_INT_ARGB);
         Graphics2D g = textImage.createGraphics();
         FontRenderContext frc = g.getFontRenderContext();
-        int fontSize = 1250/letters.length();
+        int fontSize = Math.min(600,1800/letters.length());
         Font font = new Font(Font.MONOSPACED, Font.BOLD, fontSize);
         GlyphVector gv = font.createGlyphVector(frc, letters);
         Rectangle2D box = gv.getVisualBounds();
-        int xOff = 25+(int)-box.getX();
-        int yOff = 35*letters.length()+(int)-box.getY();
+        int xOff = (150/letters.length())+(int)-box.getX();
+        int yOff = 25*letters.length()+(int)-box.getY();
         Shape shape = gv.getOutline(xOff,yOff);
         g.setClip(shape);
         g.drawImage(originalImage,0,0,null);
@@ -375,6 +382,30 @@ public class ImageTransform {
 
         this.completeImage = textImage;
         return textImage;
+	}
+	
+	public BufferedImage rotateImage(BufferedImage originalImage, double degree) {
+		
+		int width = originalImage.getWidth();
+	    int height = originalImage.getHeight();
+	    double toRad = Math.toRadians(degree);
+	    int heightPrime = (int) (width * Math.abs(Math.sin(toRad)) + height * Math.abs(Math.cos(toRad)));
+	    int widthPrime = (int) (height * Math.abs(Math.sin(toRad)) + width * Math.abs(Math.cos(toRad)));
+
+	    BufferedImage rotatedImage = new BufferedImage(widthPrime, heightPrime, BufferedImage.TYPE_INT_ARGB);
+	    Graphics2D g = rotatedImage.createGraphics();
+	    g.setComposite(AlphaComposite.SrcOver.derive(0.0f));
+	    g.setColor(Color.WHITE);
+	    g.fillRect(0, 0, widthPrime, heightPrime);
+	    g.translate(widthPrime/2, heightPrime/2);
+	    g.rotate(toRad);
+	    g.translate(-width/2, -height/2);
+	    g.setComposite(AlphaComposite.SrcOver.derive(1f));
+	    g.drawImage(originalImage, 0, 0, null);
+	   
+	    g.dispose();
+	    return rotatedImage;
+		
 	}
 
 	// generates the buffered image that is exported when there is an insufficient number of images found
