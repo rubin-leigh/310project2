@@ -278,6 +278,22 @@ public class ImageTransformTest {
 		assertEquals(completeCollage,collage);
 	}
 	
+	@Test
+	public void testNoBorders() {
+		ImageTransform it = new ImageTransform("test",false,true,"filter","shape");
+		BufferedImage collage = it.createCollageImage();
+		BufferedImage completeCollage = it.getCompleteImage();
+		assertEquals(completeCollage,collage);
+	}
+	
+	@Test
+	public void testNoRotations() {
+		ImageTransform it = new ImageTransform("test",true,false,"filter","shape");
+		BufferedImage collage = it.createCollageImage();
+		BufferedImage completeCollage = it.getCompleteImage();
+		assertEquals(completeCollage,collage);
+	}
+	
 	//helper image to cerate a buffered image we can test with 
 	private BufferedImage createFixedSizeBufferedImage() {
 		return new BufferedImage(500, 500, BufferedImage.TYPE_INT_ARGB);
