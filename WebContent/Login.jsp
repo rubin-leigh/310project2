@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
@@ -11,22 +10,22 @@
 	</head>
 	
 	<body>
-		<div class="header">
-			<h1>Login</h1>
-		</div>
-		
 		<div class="mainBlock">
-		</br>
+			<div class="header">
+				<h1>GoS (Gang of Six) Collage Generator</h1>
+			</div>
+		
+		<hr>
 			<form id="login-form" method="post">
-				</br>
 				<label id="error1" class="hidden error">Invalid Username</label>
-				</br>
+				
 				<input type="text" id="uName" name="username" class="uName" placeholder="Username"></br></br>
 				<label id="error2" class="hidden error">Invalid Password</label>
 				</br>
-				<input type="text" id="pWord" name="password" class="pWord" placeholder="Password"></br></br>
+				<input type="password" id="pWord" name="password" class="pWord" placeholder="Password"></br></br>
 				<input type="submit" id="loginButton" class="loginButtonClass" value="Login">
 			</form>
+			<input id="signupButton" type="button" class="signupButtonClass" value="Sign Up?" onclick="location.href='SignUp.jsp';" />
 		</div>
 	
 	</body>
