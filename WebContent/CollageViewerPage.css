@@ -11,7 +11,7 @@ body {
     background-color: #DCDCDC;
     font-family: Tahoma, Geneva, sans-serif;
 }
-.MainCollageView{
+#MainCollageView{
 	margin: auto;
     width: 97%;
     height: 20%;
@@ -114,4 +114,12 @@ input.input{
   padding: 3px;
   white-space: normal;
   text-align: center;
+}
+#emptyImage {
+	width: 600px;
+	height: 800px
+}
+.previousCollageImage {
+	height: 100%;
+	width: 100%;
 }

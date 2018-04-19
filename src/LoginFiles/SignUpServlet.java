@@ -44,6 +44,7 @@ public class SignUpServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		JDBC jdbc = new JDBC();
 		String signUpStatus = jdbc.makeNewUser(userName, password);
+		signUpStat = signUpStatus;
 		System.out.println(signUpStatus);
 		Gson gson = new Gson();
 		Response res = new Response();
@@ -61,7 +62,7 @@ public class SignUpServlet extends HttpServlet {
 			setOtherErr("complete");
 		}
 		res.setSignUpStatus(signUpStatus);
-		signUpStat = signUpStatus;
+		setSignUpStat(signUpStatus);
 		if (signUpStatus.equals("successful") ) {		
 			session.setAttribute("userName", userName);
 		}
@@ -83,6 +84,14 @@ public class SignUpServlet extends HttpServlet {
 
 	public void setOtherErr(String otherErr) {
 		this.otherErr = otherErr;
+	}
+
+	public String getSignUpStat() {
+		return signUpStat;
+	}
+
+	public void setSignUpStat(String signUpStat) {
+		this.signUpStat = signUpStat;
 	}
 
 }

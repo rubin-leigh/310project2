@@ -60,7 +60,7 @@ public class SignUpTest {
 		SignUpServlet ls = new SignUpServlet();
 		try {
 			ls.service(request, response);
-			assertEquals(ls.getSignUpStat(), "incompleteUsername");
+			assertEquals(ls.getSignUpStat(), "UsernameExists");
 		} catch (ServletException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -116,7 +116,7 @@ public class SignUpTest {
 		SignUpServlet ls = new SignUpServlet();
 		try {
 			ls.service(request, response);
-			assertEquals(ls.getOtherErr(), 3);
+			assertEquals(ls.getOtherErr(), "incompletePassword");
 		} catch (ServletException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -157,12 +157,12 @@ public class SignUpTest {
 	@Test
 	public void TestJDBCMakeNewUserCorrect() {
 		JDBC jdbc = new JDBC();
-		assertEquals(jdbc.checkNewUser("newUser"), "succesful");
+		assertEquals(jdbc.makeNewUser("newUser", "pass"), "successful");
 	}
 	@Test
 	public void TestJDBCMakeNewUserWrong() {
 		JDBC jdbc = new JDBC();
-		assertEquals(jdbc.checkNewUser("dan"), "usernameExists");
+		assertEquals(jdbc.makeNewUser("dan", "pass"), "UsernameExists");
 	}
 	
 	

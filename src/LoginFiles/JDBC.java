@@ -9,12 +9,12 @@ import org.mindrot.jbcrypt.BCrypt;
 
 public class JDBC {
 	Connection conn;
-	private static final String selectUserName = "SELECT * FROM USERS WHERE USERNAME=?";
+	private static final String selectUserName = "SELECT * FROM Users WHERE USERNAME=?";
 	
 	public JDBC () {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			String connectionString = "jdbc:mysql://localhost:3306/CollageMaker?user=root&password=&useSSL=true";
+			String connectionString = "jdbc:mysql://localhost:3306/CollageMaker?user=root&password=password&useSSL=false";
 			conn = DriverManager.getConnection(connectionString);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();

@@ -26,6 +26,38 @@
 			buildCollage();
 		});
 	});
+	function update(data) {
+		document.getElementById("mainCollage").src = "data:image/png;base64," + data.image.image;
+		document.getElementById("header").innerHTML = "Collage for Topic " + data.image.topic;
+		var previousCollageDiv = document.getElementById("container");
+		document.getElementById("container").innerHTML = "";
+		
+		
+		for (var i = 0; i < data.previousCollages.length; i++) {
+			var newImageDiv = document.createElement("div");
+			newImageDiv.id = i + "div";
+			newImageDiv.className = "previousCollage";
+			var newImage = document.createElement("img");
+			newImage.src = 'data:image/png;base64,' + data.previousCollages[i].image;
+			newImage.className = "previousCollageImage";
+			newImage.alt = "Image Text";
+			newImage.id = i + "image";
+			newImage.addEventListener("click", function(x) {
+				//update backend
+				//use backend response to update front end
+				var url = "SwitchCollage?id=" + x;
+				var xhttp = new XMLHttpRequest();
+				xhttp.open("GET", url, false);
+				xhttp.send();
+				var data = xhttp.responseText;
+				data = JSON.parse(data);
+				update(data);
+				
+			}.bind(this, i) );
+			newImageDiv.appendChild(newImage);
+			document.getElementById("container").appendChild(newImageDiv);
+		}
+	}
 	function switchCollage(elem) {
 		var xhttp = new XMLHttpRequest();
 		var switchCollages = "SwitchCollage.jsp?";
@@ -66,23 +98,31 @@
 		 	}
 		}
 		
+		
 		var url = "MainController?topic="
 				+ document.getElementById("topic").value
 				+ "&first=" + firstTime + "&letters="
 				+ document.getElementById("shape").value
 				+ "&borders=" + borderValue + "&filter=None&rotations=" + rotateValue;
+		
 		xhttp.open("GET", url, false);
 		xhttp.send();
 		var data = xhttp.responseText;
 		data = JSON.parse(data);
-		document.getElementById("mainCollage").src = "data:image/png;base64," + data.image.image;
-		document.getElementById("header").innerHTML = "Collage for Topic " + data.image.topic;
+		
+		//console.log(data);
+		if (firstTime) {
+			firstTime = false;	
+			document.getElementById("MainCollageView").innerHTML = "<img id='mainCollage' src='' width='100%' height='100%' alt='Image Text' /></div>"
+		}
+		update(data);
 		//update collage for...
 		//update image
 		//update previous collages
 		
 	}
 
+	
 	//checks if the text input is empty and enables the button if it is not
 	function IsEmpty() {
 
@@ -112,21 +152,13 @@
 		%>
 
 		<!-- Div to hold the main collage viewing area -->
-		<div class="MainCollageView">
+		<div id="MainCollageView">
 			<!-- Div to hold image that populates the main collage viewer area -->
-			<%
-				//if (mainCollage != null) {
-			%>
-			<img onclick="exb()" id="mainCollage"
-				src="data:image/png;base64,"
-				width="100%" height="100%" />
-			<%
-				//} else {
-			%>
+			
+			
+			
 			<div id="emptyImage"></div>
-			<%
-				//}
-			%>
+			
 		</div>
 
 		<!-- Div to hold all of the buttons and input fields -->
@@ -185,13 +217,8 @@
 			</div>
 		</form>
 		<!-- Div to hold the previos collage picker with divs to hold each image -->
-		<div id="container" >
-			<%//if(false) { //fix later
-				//for(int i =0; i<previousCollage.size(); i++){%>
+		<div id="container">
 			
-				 <div id="" onclick="switchCollage(this)"><img  src="data:image/png;base64," width="100%" height="100%" alt="Image Text" /></div>
-			<%//}
-			//}%>
 		</div>
 	</div>
 </body>
