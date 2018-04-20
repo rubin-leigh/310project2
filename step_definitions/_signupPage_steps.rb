@@ -17,6 +17,6 @@ When(/^I type in nonUnique credentials$/) do
 end
 
 Then(/^I should see that there is an error$/) do
-  pending # Write code here that turns the phrase above into concrete actions
+  expect(page).to have_content("Invalid")
 end
 
