@@ -8,8 +8,10 @@ Scenario: Collage History should Persist
 	When we create a new collage "cat"
 	And we click SaveToHistoryButton
 	And log out
+	Then I should be on the login page
 	And log in
 	Then we should see the collage "cat" in the PreviousCollageViewer
+	And click the delete button
 	
 Scenario: Collage Swapping
 	When we create a new collage "Swap"
