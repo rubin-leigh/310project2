@@ -15,7 +15,7 @@ Then(/^click Log In button$/) do
 end
 
 Then(/^I should be on the CollageViewerPage$/) do
-  expect(page).to have_content("Collage For Topic")
+  expect(page).to have_content("Collage")
 end
 
 When(/^I enter an incorrect username$/) do
@@ -27,5 +27,5 @@ When(/^I enter an incorrect password$/) do
 end
 
 Then(/^I should still be on the login page$/) do
-  expect(page).to have_content("Login Invalid username")
+  expect(page).to have_content("Invalid")
 end
