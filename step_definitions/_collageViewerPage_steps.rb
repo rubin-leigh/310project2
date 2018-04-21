@@ -1,21 +1,23 @@
 Given(/^we are on the collage viewer page$/) do
-   visit "https://localhost:8443/310Project2/CollageViewerPage.jsp"
+   visit "https://localhost:8443/310Project2/Login.jsp"
+   fill_in('uName', :with => 'dan')
+   fill_in('pWord', :with => 'password')
+   find_button('loginButton').click
    page.driver.browser.manage.window.maximize
 end
 
 When(/^we create a new collage "([^"]*)"$/) do |arg1|
   fill_in('topic', :with => arg1)
-  fill_in('shape', :with => "test")
+  fill_in('shape', :with => "t")
   find_button('submitButton').click
 end
 
 Then(/^I should see the main collage viewer has a collage$/) do
-  #TODO probably an expect page
+  page.find_by_id("mainCollage")
 end
 
 When(/^click the save button$/) do
   first("input[value=Save]").click
-  #TODO may not work, we'll test it
 end
 
 Then(/^we click SaveToHistoryButton$/) do
@@ -23,20 +25,21 @@ Then(/^we click SaveToHistoryButton$/) do
 end
 
 Then(/^we should see the collage "([^"]*)" in the PreviousCollageViewer$/) do |arg1|
-  #TODO check the alt value of the collage viewer
+  page.find_by_id("0div")
 end
 
 When(/^log out$/) do
-  first("input[value=Logout]").click
+  find_button('logoutButton').click
 end
 
 When(/^log in$/) do
-  #just a few fill_ins and a find_field+enter
+   fill_in('uName', :with => 'dan')
+   fill_in('pWord', :with => 'password')
+   find_button('loginButton').click
 end
 
 When(/^click the collage "([^"]*)" in the PreviousCollageViewer$/) do |arg1|
-  #first("img[alt="+arg1+"]").click
-  #TODO This might change depending on how the prevcollage box is set up
+  page.find_by_id("0div").click
 end
 
 When(/^click the delete button$/) do
@@ -44,7 +47,7 @@ When(/^click the delete button$/) do
 end
 
 Then(/^we should NOT see the collage "([^"]*)" in the PreviousCollageViewer$/) do |arg1|
-  pending # Write code here that turns the phrase above into concrete actions
+  page.should have_no_content(arg1)
 end
 
 Then(/^I should see there is a radio button with the black and white option$/) do
@@ -91,7 +94,6 @@ Then(/^I should see the input box has placeholder equal to enter topic$/) do
   expect(find_field('topic')['placeholder']).to eq 'Enter Topic'
 end
 
-
 Then(/^I should see there is a button called export$/) do
   page.find_by_id("exportButton", visible: true)
 end
@@ -105,7 +107,7 @@ Then(/^I should see there is a radio button called pdf$/) do
 end
 
 Then(/^the current collage should have alt text "([^"]*)"$/) do |arg1|
-  pending # Write code here that turns the phrase above into concrete actions
+  expect(page.find('#mainCollage')['alt']).to have_content arg1
 end
 
 Then(/^SaveToHistoryButton shouldn't be clickable$/) do
@@ -113,7 +115,7 @@ Then(/^SaveToHistoryButton shouldn't be clickable$/) do
 end
 
 Then(/^we should see the PreviousCollageViewer has one new element$/) do
-  pending # Write code here that turns the phrase above into concrete actions
+  page.find_by_id("0div")
 end
 
 Then(/^we should see a loading image$/) do
@@ -125,6 +127,6 @@ Then(/^I should see error text appear$/) do
 end
 
 Then(/^the main collage should display the collage for "([^"]*)"$/) do |arg1|
-  #TODO check the alt value of the collage
+   expect(page.find('#mainCollage')['alt']).to have_content arg1
 end
 

@@ -26,9 +26,9 @@ document.addEventListener("DOMContentLoaded", function() {
         	if (loginStatus === "successful") {
         		console.log("running this");
         		window.location.href = "CollageViewerPage.jsp";
-        	} else if (loginStatus === "bothIncomplete") {
+        	} else if (loginStatus === "wrongPassword") {
         		$("#error2").removeClass("hidden");
-        	} else if (loginStatus === 2){
+        	} else if (loginStatus === "wrongUsername"){
         		$("#error1").removeClass("hidden");
         	}
         	if (completedStatus === "bothIncomplete") {

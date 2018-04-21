@@ -7,9 +7,7 @@ Background:
 Scenario: generating a new collage with a given string of letters, properly uses that letter in collage generation
 	
 	When we create a new collage "cat"
+	Then the current collage should have alt text "t"
 
-Scenario: once a collage has been generated, clicking SaveToHistoryButton saves the current collage
-	
-	When we create a new collage "cat"
-	Then the current collage should have alt text "cat"
+
 

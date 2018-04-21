@@ -65,11 +65,15 @@ public class MainController extends HttpServlet {
 					previousList = getPreviousCollageList(session);
 					
 				}
-				
-				previousList.add((Collage) session.getAttribute("MainCollage"));
+				if(!first.equals("true")) {
+					System.out.println("running this");
+					previousList.add(0, (Collage) session.getAttribute("MainCollage"));
+				}
 				session.setAttribute("MainCollage", topicCollage);
+				session.setAttribute("PreviousCollageList", previousList);
 				imageResponse ir = new imageResponse();
 				ir.setImage(topicCollage);
+				ir.setPreviousCollages(previousList);
 				Gson gson = new Gson();
 				String imageResponse = gson.toJson(ir);
 				PrintWriter out = response.getWriter();

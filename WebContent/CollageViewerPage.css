@@ -1,98 +1,135 @@
 @charset "UTF-8";
 
 h1{
-	font-size: 25px;
+  font-size: 25px;
 }
 
 form {
     display: inline-block;
 }
 body {
-    background-color: #DCDCDC;
-    font-family: Tahoma, Geneva, sans-serif;
+   background-color: #70687a;
+  background-image: url(https://www.transparenttextures.com/patterns/cardboard-flat.png);
+  font-family: Tahoma, Geneva, sans-serif;
 }
 .MainCollageView{
-	margin: auto;
+  margin: auto;
     width: 97%;
     height: 20%;
     text-align: center;
     position: relative;
     background-color: white;
 }
-
+.BuildAnotherCollageForm{
+  border-radius: 12px;
+}
 form { 
   margin: 0 auto; 
   text-align: left;
-  font-size: 25px;
+  font-size: 22px;
   margin-top: 0%;
   width: 97%;
   margin-left: 1.25%;
-  background-color: #DCDCDC;
 }
 input[type='radio'] {
-    transform: scale(2.5); 
+    transform: scale(1.5); 
     vertical-align: middle;
-
 }
-#left{
-  float: left;
-  width: 20%;
-  margin-left: 5%;
-  text-align: center;
-  padding: 10px;
+#top{
+  margin-top: 6px;
 }
 #middle{
-  float: right;
-  width: 40%;
-  text-align: center;
-  padding: 10px;
-  margin-left: 5%;
+  float: left;
+  padding: 4px;
+}
+#logoutButton{
+  position: absolute;
+  top: 5;
+  right: 15;
 }
 #right{
-  float:right;
-  width: 25%;
-  text-align: left;
-  padding: 10px;
+  display: inline-block;
+  position: absolute;
+  right: 26;
 }
 label {
-  display: block;
   margin-bottom: 6px;
- 
+  padding: 6px;
 }
 .PreviousCollageViewer{
-	margin: auto;
+  margin: auto;
     width: 100%;
     height: 20%;
     text-align: center;
     position: absolute;               
-   	top: 75%;
+    top: 75%;
     background-color: white;
-   	overflow-x: visible;
+    overflow-x: visible;
 }
 h1{
-	text-align: center;
+  text-align: center;
+}
+.slidecontainer {
+    width: 40%;
+    display: inline;
+    padding: 6px;
+    float: left;
+    margin-top: 6px;
+    height: 8%;
+}
+h5 {
+  margin-top: 2%;
+}
+.slider {
+    padding: 6px;
+    -webkit-appearance: none;
+    width: 100%;
+    height: 15px;
+    border-radius: 5px;
+    background: white;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
 }
 
-form.ExportForm{
+.slider:hover {
+    opacity: 1;
 }
-form.BuildAnotherCollageForm{
-	
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #696969;
+    cursor: pointer;
 }
-input.buttons{
-	color: white;
-	background-color: #696969;
-	border: none;
-	height: 50px;
-	font-size: 20px;
-	width: 200px;
+
+.slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #696969;
+    cursor: pointer;
+}
+button{
+  color: black;
+  background-color: lightgrey;
+  border: none;
+  height: 40px;
+  font-size: 22px;
+  width: 150px;
+  border-radius: 12px;
 }
 input.input{
-  width: 300px;
+  width: 250px;
   height: 40px;
   font-size: 20px;
 }
 #container {
-	background-color: white;
+  background-color: white;
   position: relative;
   height: 9em;
   width: 100%;
@@ -103,7 +140,7 @@ input.input{
   overflow-y: hidden;
   vertical-align:middle;
   position: relative;
-   	top: 75%;
+    top: 75%;
 }
 #container div {
   display: inline-block;

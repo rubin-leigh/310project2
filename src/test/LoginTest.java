@@ -37,7 +37,7 @@ public class LoginTest {
 		LoginServlet ls = new LoginServlet();
 		try {
 			ls.service(request, response);
-			assertEquals(ls.getLoginStatus(), 0);
+			assertEquals(ls.getLoginStatus(), "successful");
 		} catch (ServletException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -60,12 +60,13 @@ public class LoginTest {
 		LoginServlet ls = new LoginServlet();
 		try {
 			ls.service(request, response);
-			assertEquals(ls.getLoginStatus(), 2);
+			assertEquals(ls.getLoginStatus(), "wrongUsername");
 		} catch (ServletException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+	@Test
 	public void TestLoginBadPassword() throws IOException {
 		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
 		HttpServletResponse response = Mockito.mock(HttpServletResponse.class);
@@ -78,7 +79,7 @@ public class LoginTest {
 		LoginServlet ls = new LoginServlet();
 		try {
 			ls.service(request, response);
-			assertEquals(ls.getLoginStatus(), 1);
+			assertEquals(ls.getLoginStatus(), "wrongPassword");
 		} catch (ServletException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -97,7 +98,7 @@ public class LoginTest {
 		LoginServlet ls = new LoginServlet();
 		try {
 			ls.service(request, response);
-			assertEquals(ls.getOtherErr(), 1);
+			assertEquals(ls.getOtherErr(), "bothIncomplete");
 		} catch (ServletException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -116,7 +117,7 @@ public class LoginTest {
 		LoginServlet ls = new LoginServlet();
 		try {
 			ls.service(request, response);
-			assertEquals(ls.getOtherErr(), 3);
+			assertEquals(ls.getOtherErr(), "incompletePassword");
 		} catch (ServletException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -135,7 +136,7 @@ public class LoginTest {
 		LoginServlet ls = new LoginServlet();
 		try {
 			ls.service(request, response);
-			assertEquals(ls.getOtherErr(), 2);
+			assertEquals(ls.getOtherErr(), "incompleteUsername");
 		} catch (ServletException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -154,7 +155,7 @@ public class LoginTest {
 		LoginServlet ls = new LoginServlet();
 		try {
 			ls.service(request, response);
-			assertEquals(ls.getOtherErr(), 0);
+			assertEquals(ls.getOtherErr(), "complete");
 		} catch (ServletException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -163,19 +164,19 @@ public class LoginTest {
 	@Test
 	public void TestJDBCCorrect() {
 		JDBC jdbc = new JDBC();
-		assertEquals(jdbc.checkUserCredentials("dan", "password"), 0);
+		assertEquals(jdbc.checkUserCredentials("dan", "password"), "successful");
 		
 	}
 	@Test
 	public void TestJDBCWrongPass() {
 		JDBC jdbc = new JDBC();
-		assertEquals(jdbc.checkUserCredentials("dan", "wrong"), 1);
+		assertEquals(jdbc.checkUserCredentials("dan", "wrong"), "wrongPassword");
 		
 	}
 	@Test
 	public void TestJDBCWrongAll() {
 		JDBC jdbc = new JDBC();
-		assertEquals(jdbc.checkUserCredentials("wrong", "wrong"), 2);
+		assertEquals(jdbc.checkUserCredentials("wrong", "wrong"), "wrongUsername");
 		
 	}
 	@Test

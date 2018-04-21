@@ -26,6 +26,38 @@
 			buildCollage();
 		});
 	});
+	function update(data) {
+		document.getElementById("mainCollage").src = "data:image/png;base64," + data.image.image;
+		document.getElementById("header").innerHTML = "Collage for Topic " + data.image.topic;
+		var previousCollageDiv = document.getElementById("container");
+		document.getElementById("container").innerHTML = "";
+		
+		
+		for (var i = 0; i < data.previousCollages.length; i++) {
+			var newImageDiv = document.createElement("div");
+			newImageDiv.id = i + "div";
+			newImageDiv.className = "previousCollage";
+			var newImage = document.createElement("img");
+			newImage.src = 'data:image/png;base64,' + data.previousCollages[i].image;
+			newImage.className = "previousCollageImage";
+			newImage.alt = "Image Text";
+			newImage.id = i + "image";
+			newImage.addEventListener("click", function(x) {
+				//update backend
+				//use backend response to update front end
+				var url = "SwitchCollage?id=" + x;
+				var xhttp = new XMLHttpRequest();
+				xhttp.open("GET", url, false);
+				xhttp.send();
+				var data = xhttp.responseText;
+				data = JSON.parse(data);
+				update(data);
+				
+			}.bind(this, i) );
+			newImageDiv.appendChild(newImage);
+			document.getElementById("container").appendChild(newImageDiv);
+		}
+	}
 	function switchCollage(elem) {
 		var xhttp = new XMLHttpRequest();
 		var switchCollages = "SwitchCollage.jsp?";
@@ -66,23 +98,31 @@
 		 	}
 		}
 		
+		
 		var url = "MainController?topic="
 				+ document.getElementById("topic").value
 				+ "&first=" + firstTime + "&letters="
 				+ document.getElementById("shape").value
 				+ "&borders=" + borderValue + "&filter=None&rotations=" + rotateValue;
+		
 		xhttp.open("GET", url, false);
 		xhttp.send();
 		var data = xhttp.responseText;
 		data = JSON.parse(data);
-		document.getElementById("mainCollage").src = "data:image/png;base64," + data.image.image;
-		document.getElementById("header").innerHTML = "Collage for Topic " + data.image.topic;
+		
+		//console.log(data);
+		if (firstTime) {
+			firstTime = false;	
+			document.getElementById("MainCollageView").innerHTML = "<img id='mainCollage' src='' width='100%' height='100%' alt='Image Text' /></div>"
+		}
+		update(data);
 		//update collage for...
 		//update image
 		//update previous collages
 		
 	}
 
+	
 	//checks if the text input is empty and enables the button if it is not
 	function IsEmpty() {
 
@@ -94,6 +134,21 @@
 			document.getElementById("submitButton").disabled = false;
 		}
 	}
+
+	//displays value on the slider of the height
+	function changeHeight() {
+		var sliderH = document.getElementById("height");
+		var currentVal = sliderH.value;
+		document.getElementById('demoHeight').innerHTML = currentVal;
+	}
+
+	//displays value on the slider of the width
+	function changeWidth() {
+		var sliderW = document.getElementById("width");
+		var currentVal = sliderW.value;
+		document.getElementById('demoWidth').innerHTML = currentVal;
+	}
+
 </script>
 
 
@@ -112,60 +167,60 @@
 		%>
 
 		<!-- Div to hold the main collage viewing area -->
-		<div class="MainCollageView">
+		<div id="MainCollageView">
 			<!-- Div to hold image that populates the main collage viewer area -->
-			<%
-				//if (mainCollage != null) {
-			%>
-			<img onclick="exb()" id="mainCollage"
-				src="data:image/png;base64,"
-				width="100%" height="100%" />
-			<%
-				//} else {
-			%>
+			
+			
+			
 			<div id="emptyImage"></div>
-			<%
-				//}
-			%>
+			
 		</div>
 
 		<!-- Div to hold all of the buttons and input fields -->
 		<form class="BuildAnotherCollageForm">
-			<div id="left">
+			<div id="top">
 				<label>
-					<input type="text" id="topic" name="topic"
-					class="input" placeholder="Enter Topic" oninput="IsEmpty()">
+					<input type="text" id="topic" name="topic" class="input" placeholder="Enter Topic" oninput="IsEmpty()">
 				</label> 
 				<label>
-					<input type="text" id="shape" name="shape" class="input"
-					placeholder="Enter Shape" oninput="IsEmpty()">
-					</br>
+					<input type="text" id="shape" name="shape" class="input" placeholder="Enter Shape" oninput="IsEmpty()">
 				</label> 
-				<button id="submitButton" class="buttons"value="Build Collage">
-				Build Collage
-				</button>
-			</div>
+				<button id="submitButton" class="buttons"value="Build Collage">Build Collage</button>
 
-
-
-			<div id="right">
+				<div id="right">
 				<button id="saveButton" class="buttons"
 					value="Save">Save</button>
 				<button id="exportButton" class="buttons" value="Export">Export</button>
 				<button id="deleteButton" class="buttons" value="Delete">Delete</button>
+				</div>
 				<button id="logoutButton" class="buttons" value="Logout" action="/loginPage.jsp">Logout</button>
-				
 			</div>
+
+			<div class="slidecontainer">
+				Height
+  				<input type="range" min="1" max="1000" value="500" class="slider" id="height" onchange="changeHeight()" >
+ 				 <h5>Value: <label id="demoHeight"></label></h5>
+			</div>
+
+			<div class="slidecontainer">
+				Width
+  				<input type="range" min="1" max="1000" value="500" class="slider" id="width" onchange="changeWidth()">
+ 				<h5> Value: <span id="demoWidth"></span></h5>
+			</div>
+
 			<div id="middle">
 				<label>
+					<b>Photo Filters    </b>
 					<input type="radio" id="none" name="filter" value="none" checked>
 						None 
 					<input type="radio" id="blackAndWhite" name="filter" value="blackAndWhite">
 						Black & White 
 					<input type="radio" id="grayscale" name="filter"
 						value="grayscale"> Grayscale <input type="radio" id="sepia"
-						name="filter" value="sepia"> Sepia</label> <label>Photo
-						Borders 
+						name="filter" value="sepia"> Sepia</label> 
+					<label>
+					<br>
+					<b>Photo Borders    </b>
 					<input type="radio" id="borderOn" name="border"
 						value="borderOn" checked>
 						ON 
@@ -175,7 +230,7 @@
 					</br>
 				</label> 
 				<label id="rotations">
-					Photo Rotations 
+					<b>Photo Rotations </b>
 					<input type="radio" id="rotateOn"name="rotations" value="rotateOn" checked>
 						ON 
 					<input type="radio" id="rotateOff" name="rotations" value="rotateOff">
@@ -185,13 +240,8 @@
 			</div>
 		</form>
 		<!-- Div to hold the previos collage picker with divs to hold each image -->
-		<div id="container" >
-			<%//if(false) { //fix later
-				//for(int i =0; i<previousCollage.size(); i++){%>
+		<div id="container">
 			
-				 <div id="" onclick="switchCollage(this)"><img  src="data:image/png;base64," width="100%" height="100%" alt="Image Text" /></div>
-			<%//}
-			//}%>
 		</div>
 	</div>
 </body>
