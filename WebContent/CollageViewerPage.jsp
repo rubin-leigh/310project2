@@ -25,7 +25,29 @@
 			e.preventDefault();
 			buildCollage();
 		});
+		document.getElementById("saveButton").addEventListener("click", function(e) {
+			e.preventDefault();
+			saveCollage();
+			
+		});
+		loadData();
 	});
+	function loadData() {
+		var xhttp = new XMLHttpRequest();
+		var switchCollages = "LoadServlet";
+		xhttp.open("GET", switchCollages, false);
+		xhttp.send();
+		var response = xhttp.responseText;
+		console.log(response);
+	};
+	function saveCollage() {
+		var xhttp = new XMLHttpRequest();
+		var switchCollages = "SaveServlet";
+		xhttp.open("GET", switchCollages, false);
+		xhttp.send();
+		var response = xhttp.responseText;
+		console.log(response);
+	}
 	function update(data) {
 		document.getElementById("mainCollage").src = "data:image/png;base64," + data.image.image;
 		document.getElementById("header").innerHTML = "Collage for Topic " + data.image.topic;
@@ -116,9 +138,7 @@
 			document.getElementById("MainCollageView").innerHTML = "<img id='mainCollage' src='' width='100%' height='100%' alt='Image Text' /></div>"
 		}
 		update(data);
-		//update collage for...
-		//update image
-		//update previous collages
+		
 		
 	}
 
@@ -134,21 +154,6 @@
 			document.getElementById("submitButton").disabled = false;
 		}
 	}
-
-	//displays value on the slider of the height
-	function changeHeight() {
-		var sliderH = document.getElementById("height");
-		var currentVal = sliderH.value;
-		document.getElementById('demoHeight').innerHTML = currentVal;
-	}
-
-	//displays value on the slider of the width
-	function changeWidth() {
-		var sliderW = document.getElementById("width");
-		var currentVal = sliderW.value;
-		document.getElementById('demoWidth').innerHTML = currentVal;
-	}
-
 </script>
 
 
@@ -178,49 +183,41 @@
 
 		<!-- Div to hold all of the buttons and input fields -->
 		<form class="BuildAnotherCollageForm">
-			<div id="top">
+			<div id="left">
 				<label>
-					<input type="text" id="topic" name="topic" class="input" placeholder="Enter Topic" oninput="IsEmpty()">
+					<input type="text" id="topic" name="topic"
+					class="input" placeholder="Enter Topic" oninput="IsEmpty()">
 				</label> 
 				<label>
-					<input type="text" id="shape" name="shape" class="input" placeholder="Enter Shape" oninput="IsEmpty()">
+					<input type="text" id="shape" name="shape" class="input"
+					placeholder="Enter Shape" oninput="IsEmpty()">
+					</br>
 				</label> 
-				<button id="submitButton" class="buttons"value="Build Collage">Build Collage</button>
+				<button id="submitButton" class="buttons"value="Build Collage">
+				Build Collage
+				</button>
+			</div>
 
-				<div id="right">
+
+
+			<div id="right">
 				<button id="saveButton" class="buttons"
 					value="Save">Save</button>
 				<button id="exportButton" class="buttons" value="Export">Export</button>
 				<button id="deleteButton" class="buttons" value="Delete">Delete</button>
-				</div>
 				<button id="logoutButton" class="buttons" value="Logout" action="/loginPage.jsp">Logout</button>
+				
 			</div>
-
-			<div class="slidecontainer">
-				Height
-  				<input type="range" min="1" max="1000" value="500" class="slider" id="height" onchange="changeHeight()" >
- 				 <h5>Value: <label id="demoHeight"></label></h5>
-			</div>
-
-			<div class="slidecontainer">
-				Width
-  				<input type="range" min="1" max="1000" value="500" class="slider" id="width" onchange="changeWidth()">
- 				<h5> Value: <span id="demoWidth"></span></h5>
-			</div>
-
 			<div id="middle">
 				<label>
-					<b>Photo Filters    </b>
 					<input type="radio" id="none" name="filter" value="none" checked>
 						None 
 					<input type="radio" id="blackAndWhite" name="filter" value="blackAndWhite">
 						Black & White 
 					<input type="radio" id="grayscale" name="filter"
 						value="grayscale"> Grayscale <input type="radio" id="sepia"
-						name="filter" value="sepia"> Sepia</label> 
-					<label>
-					<br>
-					<b>Photo Borders    </b>
+						name="filter" value="sepia"> Sepia</label> <label>Photo
+						Borders 
 					<input type="radio" id="borderOn" name="border"
 						value="borderOn" checked>
 						ON 
@@ -230,7 +227,7 @@
 					</br>
 				</label> 
 				<label id="rotations">
-					<b>Photo Rotations </b>
+					Photo Rotations 
 					<input type="radio" id="rotateOn"name="rotations" value="rotateOn" checked>
 						ON 
 					<input type="radio" id="rotateOff" name="rotations" value="rotateOff">
