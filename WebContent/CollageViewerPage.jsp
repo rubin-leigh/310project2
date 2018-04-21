@@ -30,7 +30,7 @@
 			saveCollage();
 			
 		});
-		loadData();
+		//loadData();
 	});
 
 	function loadData() {
@@ -209,19 +209,9 @@
 		<!-- Div to hold the main collage viewing area -->
 		<div id="MainCollageView">
 			<!-- Div to hold image that populates the main collage viewer area -->
-			<%
-				//if (mainCollage != null) {
-			%>
-			<img onclick="exb()" id="mainCollage"
-				src="data:image/png;base64,"
-				width="100%" height="100%" />
-			<%
-				//} else {
-			%>
+			
 			<div id="emptyImage"></div>
-			<%
-				//}
-			%>
+			
 		</div>
 
 		<!-- Div to hold all of the buttons and input fields -->
@@ -246,13 +236,13 @@
 
 			<div class="slidecontainer">
 				Height
-  				<input type="range" min="1" max="100" value="50" class="slider" id="height" onchange="changeHeight()" >
+  				<input type="range" min="500" max="1000" value="600" class="slider" id="height" onchange="changeHeight()" >
  				 <h5>Value: <label id="demoHeight"></label></h5>
 			</div>
 
 			<div class="slidecontainer">
 				Width
-  				<input type="range" min="1" max="100" value="50" class="slider" id="width" onchange="changeWidth()">
+  				<input type="range" min="500" max="1000" value="800" class="slider" id="width" onchange="changeWidth()">
  				<h5> Value: <span id="demoWidth"></span></h5>
 			</div>
 
