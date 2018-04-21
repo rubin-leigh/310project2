@@ -279,12 +279,8 @@
 		</form>
 		<!-- Div to hold the previos collage picker with divs to hold each image -->
 		<div id="container" >
-			<%//if(false) { //fix later
-				//for(int i =0; i<previousCollage.size(); i++){%>
 			
-				 <div id="" onclick="switchCollage(this)"><img  src="data:image/png;base64," width="100%" height="100%" alt="Image Text" /></div>
-			<%//}
-			//}%>
+
 		</div>
 	</div>
 </body>
