@@ -11,6 +11,9 @@ Scenario: logging in with correct credentials
 	Then click Log In button
 	Then I should be on the CollageViewerPage
 
+	And log out
+	Then I should be on the login page
+
 Scenario: logging in with incorrect credentials
 	
 	When I enter an incorrect username
