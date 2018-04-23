@@ -30,15 +30,22 @@
 			saveCollage();
 			
 		});
-		//loadData();
+		loadData();
 	});
 
 	function loadData() {
 		var xhttp = new XMLHttpRequest();
-		var switchCollages = "LoadServlet";
-		xhttp.open("GET", switchCollages, false);
+		var location = "LoadServlet";
+		xhttp.open("GET", location, false);
 		xhttp.send();
 		var response = xhttp.responseText;
+		response = JSON.parse(response);
+		
+		if (!response.isEmpty) {
+			document.getElementById("MainCollageView").innerHTML = "<img id='mainCollage' src='' width='100%' height='100%' alt='Image Text' /></div>"
+			firstTime = false;
+			update(response);
+		}
 		console.log(response);
 	};
 	function saveCollage() {
@@ -223,15 +230,15 @@
 				<label>
 					<input type="text" id="shape" name="shape" class="input" placeholder="Enter Shape" oninput="IsEmpty()">
 				</label> 
-				<button id="submitButton" class="buttons"value="Build Collage">Build Collage</button>
-
+				
 				<div id="right">
-				<button id="saveButton" class="buttons"
-					value="Save">Save</button>
+				<button id="submitButton" class="buttons"value="Build Collage">Build Collage</button>
+				<button id="saveButton" class="buttons" value="Save">Save</button>
 				<button id="exportButton" class="buttons" value="Export">Export</button>
 				<button id="deleteButton" class="buttons" value="Delete">Delete</button>
+				
 				</div>
-				<button id="logoutButton" class="buttons" value="Logout" action="/loginPage.jsp">Logout</button>
+				
 			</div>
 
 			<div class="slidecontainer">

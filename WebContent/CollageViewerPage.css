@@ -163,4 +163,8 @@ input.input{
 .previousCollageImage {
 	height: 100%;
 	width: 100%;
+	
+}
+#width {
+	margin-left: 10px;
 }

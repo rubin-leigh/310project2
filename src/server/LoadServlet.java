@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
+
 import LoginFiles.JDBC;
 
 /**
@@ -31,7 +33,7 @@ public class LoadServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		PrintWriter out = response.getWriter();
 		HttpSession session = request.getSession();
@@ -42,14 +44,33 @@ public class LoadServlet extends HttpServlet {
 			return;
 		} else {
 			JDBC jdbc = new JDBC();
-			Collage currentCollage = (Collage) session.getAttribute("MainCollage");
-			ArrayList<Collage> previousCollages = (ArrayList<Collage>) session.getAttribute("PreviousCollageList");
-			previousCollages.add(0, currentCollage);
-			jdbc.saveData(previousCollages, currentUser, false);
-			previousCollages.remove(0);
-			out.println("Success");
-			this.setStatus("Success");
-			return;
+//			Collage currentCollage = (Collage) session.getAttribute("MainCollage");
+//			ArrayList<Collage> previousCollages = (ArrayList<Collage>) session.getAttribute("PreviousCollageList");
+			//previousCollages.add(0, currentCollage);
+			ArrayList<Collage> collages = jdbc.getPreviousCollages(currentUser, false);
+			Collage currentCollage = jdbc.getActiveCollage(currentUser, false);
+			imageResponse ir = new imageResponse();
+			Gson gson = new Gson();
+			if (currentCollage == null) {
+				ir.setEmpty(true);
+				out.println(gson.toJson(ir));
+				return;
+			} else {
+				session.setAttribute("MainCollage", currentCollage);
+				session.setAttribute("PreviousCollageList", collages);
+				
+				ir.setImage(currentCollage);
+				if (collages == null) {
+					collages = new ArrayList<Collage>();
+				}
+				ir.setPreviousCollages(collages);
+				ir.setEmpty(false);
+				out.println(gson.toJson(ir));
+				this.setStatus("Success");
+				return;
+			}
+			//previousCollages.remove(0);
+			
 		}
 		
 	}
