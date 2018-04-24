@@ -14,6 +14,7 @@ public class Collage implements Serializable{
 	private String filter;
 	private boolean border;
 	private boolean rotation;
+	public String aText ="";
 
 	//reuturns collage topic
 	public String getTopic(){

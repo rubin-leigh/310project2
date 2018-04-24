@@ -32,6 +32,15 @@ public class CollageHandler {
 		Collage collageWrapper = new Collage();
 		collageWrapper.setTopic(topic);
 		collageWrapper.setImage(convertBufferedImageToBase64(completeCollage));
+		String borderText ="bordersOff";
+		if(borders==true){
+			borderText="bordersOn";
+		}
+		String rotationText ="rotationsOff";
+		if(rotations==true){
+			rotationText="rotationsOn";
+		}
+		collageWrapper.aText = this.topic + "-" + this.letters + "-" + this.filter + "-" + borderText + "-"+ rotationText;
 		return collageWrapper;
 	}
 
