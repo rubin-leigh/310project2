@@ -1,5 +1,5 @@
 package test;
-  
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -21,66 +21,66 @@ import server.MainController;
 public class MainControllerTest {
     
 	//tests doGet function to make sure we set everything to the session
-//	@Test
-//    public void testDoGet() {  
-//        HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
-//        HttpServletResponse response = Mockito.mock(HttpServletResponse.class);
-//        HttpSession session = Mockito.mock(HttpSession.class);
-//        RequestDispatcher rd = Mockito.mock(RequestDispatcher.class);
-//        MainController mainController = new MainController();
-//        MainController mainControllerSpy = Mockito.spy(mainController);
-//        
-//        Mockito.when(request.getParameter("topic")).thenReturn("Cat");
-//        Mockito.when(request.getSession()).thenReturn(session);
-//        Mockito.when(request.getRequestDispatcher("/CollageViewerPage.jsp")).thenReturn(rd);
-//        Collage mainCollage = new Collage();
-//        Mockito.when(mainControllerSpy.buildCollage("Cat",true,true,"sepia","letters")).thenReturn(mainCollage);
-//        ArrayList<Collage> previousCollageListTest = new ArrayList<Collage>();
-//        Mockito.when(mainControllerSpy.getPreviousCollageList(session)).thenReturn(previousCollageListTest);
-//        
-//        try {
-//            mainControllerSpy.doGet(request, response);
-//            Mockito.verify(session).setAttribute("MainCollage", mainCollage);
-//            Mockito.verify(rd).forward(request, response);
-//        } catch (ServletException e) {
-//            System.out.println("ServletException testing MainController doPost()");
-//        } catch (IOException e) {
-//            System.out.println("IOException testing MainController doPost()");
-//        }
-//        
-//    }
-//	
-//	//tests doPost function to make sure we set everything to the session and forward to the next page
-//    @Test
-//    public void testDoPost() {
-//        HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
-//        HttpServletResponse response = Mockito.mock(HttpServletResponse.class);
-//        HttpSession session = Mockito.mock(HttpSession.class);
-//        RequestDispatcher rd = Mockito.mock(RequestDispatcher.class);
-//        MainController mainController = new MainController();
-//        MainController mainControllerSpy = Mockito.spy(mainController);
-//        
-//        Mockito.when(request.getParameter("topic")).thenReturn("Cat");
-//        Mockito.when(request.getSession()).thenReturn(session);
-//        Mockito.when(request.getRequestDispatcher("/CollageViewerPage.jsp")).thenReturn(rd);
-//        Collage mainCollage = new Collage();
-//        Mockito.when(mainControllerSpy.buildCollage("Cat",true,true,"sepia","letters")).thenReturn(mainCollage);
-//        ArrayList<Collage> previousCollageListTest = new ArrayList<Collage>();
-//        Mockito.when(mainControllerSpy.createNewListForTesting()).thenReturn(previousCollageListTest);
-//        
-//        try {
-//            mainControllerSpy.doPost(request, response);
-//            Mockito.verify(session).setAttribute("MainCollage", mainCollage);
-//            Mockito.verify(session).setAttribute("PreviousCollageList", previousCollageListTest);
-//            Mockito.verify(rd).forward(request, response);
-//        } catch (ServletException e) {
-//            System.out.println("ServletException testing MainController doPost()");
-//        } catch (IOException e) {
-//            System.out.println("IOException testing MainController doPost()");
-//        }
-//        
-//    }
-//    
+	@Test
+    public void testDoGet() {  
+        HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
+        HttpServletResponse response = Mockito.mock(HttpServletResponse.class);
+        HttpSession session = Mockito.mock(HttpSession.class);
+        RequestDispatcher rd = Mockito.mock(RequestDispatcher.class);
+        MainController mainController = new MainController();
+        MainController mainControllerSpy = Mockito.spy(mainController);
+        
+        Mockito.when(request.getParameter("topic")).thenReturn("Cat");
+        Mockito.when(request.getSession()).thenReturn(session);
+        Mockito.when(request.getRequestDispatcher("/CollageViewerPage.jsp")).thenReturn(rd);
+        Collage mainCollage = new Collage();
+        Mockito.when(mainControllerSpy.buildCollage("Cat", true, true, "shape", "none", 800, 600)).thenReturn(mainCollage);
+        ArrayList<Collage> previousCollageListTest = new ArrayList<Collage>();
+        Mockito.when(mainControllerSpy.getPreviousCollageList(session)).thenReturn(previousCollageListTest);
+        
+        try {
+            mainControllerSpy.doGet(request, response);
+            Mockito.verify(session).setAttribute("MainCollage", mainCollage);
+            Mockito.verify(rd).forward(request, response);
+        } catch (ServletException e) {
+            System.out.println("ServletException testing MainController doPost()");
+        } catch (IOException e) {
+            System.out.println("IOException testing MainController doPost()");
+        }
+        
+    }
+	
+	//tests doPost function to make sure we set everything to the session and forward to the next page
+    @Test
+    public void testDoPost() {
+        HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
+        HttpServletResponse response = Mockito.mock(HttpServletResponse.class);
+        HttpSession session = Mockito.mock(HttpSession.class);
+        RequestDispatcher rd = Mockito.mock(RequestDispatcher.class);
+        MainController mainController = new MainController();
+        MainController mainControllerSpy = Mockito.spy(mainController);
+        
+        Mockito.when(request.getParameter("topic")).thenReturn("Cat");
+        Mockito.when(request.getSession()).thenReturn(session);
+        Mockito.when(request.getRequestDispatcher("/CollageViewerPage.jsp")).thenReturn(rd);
+        Collage mainCollage = new Collage();
+        Mockito.when(mainControllerSpy.buildCollage("Cat", true, true, "shape", "none", 800, 600)).thenReturn(mainCollage);
+        ArrayList<Collage> previousCollageListTest = new ArrayList<Collage>();
+        Mockito.when(mainControllerSpy.createNewListForTesting()).thenReturn(previousCollageListTest);
+        
+        try {
+            mainControllerSpy.doPost(request, response);
+            Mockito.verify(session).setAttribute("MainCollage", mainCollage);
+            Mockito.verify(session).setAttribute("PreviousCollageList", previousCollageListTest);
+            Mockito.verify(rd).forward(request, response);
+        } catch (ServletException e) {
+            System.out.println("ServletException testing MainController doPost()");
+        } catch (IOException e) {
+            System.out.println("IOException testing MainController doPost()");
+        }
+        
+    }
+    
     //tests buildCollage funcution to make sure it returns a collage object
     @Test
     public void testBuildCollage() {
@@ -89,7 +89,7 @@ public class MainControllerTest {
     		Collage testCollage = new Collage();
     		Mockito.when(ch.build()).thenReturn(testCollage);
     		
-    		Collage producedCollage = mainController.buildCollage("Cat",true,true,"sepia","letters");
+    		Collage producedCollage = mainController.buildCollage("Cat", true, true, "shape", "none", 800, 600);
     		assertThat(producedCollage, instanceOf(Collage.class));
     }
     
