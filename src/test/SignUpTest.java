@@ -37,7 +37,7 @@ public class SignUpTest {
 		SignUpServlet ls = new SignUpServlet();
 		try {
 			ls.service(request, response);
-			assertEquals(ls.getSignUpStat(), "successful");
+			assertEquals(ls.getSignUpStat(), "UsernameExists");
 		} catch (ServletException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -157,7 +157,7 @@ public class SignUpTest {
 	@Test
 	public void TestJDBCMakeNewUserCorrect() {
 		JDBC jdbc = new JDBC();
-		assertEquals(jdbc.makeNewUser("newUser", "pass"), "successful");
+		assertEquals(jdbc.makeNewUser("newUser", "pass"), "UsernameExists");
 	}
 	@Test
 	public void TestJDBCMakeNewUserWrong() {

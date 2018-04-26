@@ -31,9 +31,9 @@ public class TestCollageModification {
 	@Test
 	public void TestLetterCreation() throws IOException {
 
-		ImageTransform it = new ImageTransform("test", true, true, "None", "");
+		ImageTransform it = new ImageTransform("test", true, true, "None", "Test", 800, 600);
 		String testString = "test";
-		BufferedImage textImage = it.convertToTextImage(new BufferedImage(null, null, false, null));
+		BufferedImage textImage = it.createCollageImage();
 		assertNotNull(textImage);
 		
 	}

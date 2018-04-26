@@ -35,7 +35,7 @@ public class ImageTransformTest {
 	// tests that the constructor of the ImageTransform class creates a list field
 	@Test
 	public void testConstructor() {
-		ImageTransform imageTransform = new ImageTransform("test",true,true,"filter","shape");
+		ImageTransform imageTransform = new ImageTransform("test",true,true,"filter","shape",800,600);
 		assertThat(imageTransform.getRetrievedImages(), instanceOf(ArrayList.class));
 		assertThat(imageTransform, instanceOf(ImageTransform.class));
 	}
@@ -43,7 +43,7 @@ public class ImageTransformTest {
 	// tests that createCollageImages() works when there is an insufficient number of images found
 	@Test
 	public void testCreateCollageImageInsufficientNumber() {
-		ImageTransform imageTransform = new ImageTransform("asgparigsgaigasd",true,true,"filter","shape");
+		ImageTransform imageTransform = new ImageTransform("asgparigsgaigasd",true,true,"filter","shape",800,600);
 		ImageTransform imageTransformSpy = Mockito.spy(imageTransform);
 
 		Mockito.doReturn(false).when(imageTransformSpy).fetchImages();
@@ -58,7 +58,7 @@ public class ImageTransformTest {
 	//tests fetchImages by running fetchimages and mocks external google search functionality
 	@Test
 	public void testFetchImages() throws IOException {
-		ImageTransform imageTransform = new ImageTransform("test",true,true,"filter","shape");
+		ImageTransform imageTransform = new ImageTransform("test",true,true,"filter","shape",800,600);
 		ImageTransform imageTransformSpy = Mockito.spy(imageTransform);
 		URL testURL = new URL("http://www.google.com");
 		HttpURLConnection testConnection = (HttpURLConnection) testURL.openConnection();
@@ -82,7 +82,7 @@ public class ImageTransformTest {
 	// tests that createCollageImages() works when there is a sufficient number of images found
 	@Test
 	public void testCreateCollageImageSufficientNumber() {
-		ImageTransform imageTransform = new ImageTransform("aeiporbnawrionaeworgawefa",true,true,"filter","shape");
+		ImageTransform imageTransform = new ImageTransform("aeiporbnawrionaeworgawefa",true,true,"filter","shape",800,600);
 		ImageTransform imageTransformSpy = Mockito.spy(imageTransform);
 
 		Mockito.doReturn(true).when(imageTransformSpy).fetchImages();
@@ -97,7 +97,7 @@ public class ImageTransformTest {
 	// tests that validateRetrievedImages() returns false when there are less than 30 images stored in retrieved images
 	@Test
 	public void testValidateRetrievedImagesInsufficientNumber() {
-		ImageTransform imageTransform = new ImageTransform("test",true,true,"filter","shape");
+		ImageTransform imageTransform = new ImageTransform("test",true,true,"filter","shape",800,600);
 		List<BufferedImage> testImages = new ArrayList<BufferedImage>();
 		imageTransform.setRetrievedImages(testImages);
 
@@ -110,7 +110,7 @@ public class ImageTransformTest {
 	// tests that validateRetrievedImages() returns true and removes excess images when more than 30 images are stored in retrieved images
 	@Test
 	public void testValidateRetrievedImagesSufficientNumber() {
-		ImageTransform imageTransform = new ImageTransform("test",true,true,"filter","shape");
+		ImageTransform imageTransform = new ImageTransform("test",true,true,"filter","shape",800,600);
 		List<BufferedImage> testImages = new ArrayList<BufferedImage>();
 
 		for(int i = 0; i < 31; i++) {
@@ -128,7 +128,7 @@ public class ImageTransformTest {
 	//tests the generateRequestURLResultNumberZero to make sure the url that is generated is a valid url
 	@Test
 	public void testGenerateRequestURLResultNumberZero() throws MalformedURLException{
-		ImageTransform imageTransform = new ImageTransform("test",true,true,"filter","shape");
+		ImageTransform imageTransform = new ImageTransform("test",true,true,"filter","shape",800,600);
 		URL requestURL;
 		requestURL = imageTransform.generateRequestURL(0, "");
 		String urlStringGenerated = requestURL.toString();
@@ -139,7 +139,7 @@ public class ImageTransformTest {
 	//tests generateRequestURLResultNumberNotZero function to make sure the url generated is valid
 	@Test
 	public void testGenerateRequestURLResultNumberNotZero() throws MalformedURLException{
-		ImageTransform imageTransform = new ImageTransform("test",true,true,"filter","shape");
+		ImageTransform imageTransform = new ImageTransform("test",true,true,"filter","shape",800,600);
 		URL requestURL;
 		requestURL = imageTransform.generateRequestURL(10, "");
 		String urlStringGenerated = requestURL.toString();
@@ -150,14 +150,14 @@ public class ImageTransformTest {
 	//tests the exception throw by generateRequestURLMalformedURLException by making the url not formed correctly
 	@Test(expected = MalformedURLException.class)
 	public void testGenerateRequestURLMalformedURLException() throws MalformedURLException {
-		ImageTransform imageTransform = new ImageTransform("test",true,true,"filter","shape");
+		ImageTransform imageTransform = new ImageTransform("test",true,true,"filter","shape",800,600);
 		URL requestURL = imageTransform.generateRequestURL(10, "ppp");
 	}
 
 	//test the generateRotationAmount function by running it 100 times and making sure it is within the -45 to 45 range
 	@Test
     public void generateRotationAmountTester() {
-        ImageTransform it = new ImageTransform("test",true,true,"filter","shape");
+        ImageTransform it = new ImageTransform("test",true,true,"filter","shape",800,600);
         for(int i = 0; i< 100; i++) {
             int randRot = it.generateRotationAmount();
             assertTrue(randRot<=45 && randRot>=-45);
@@ -168,7 +168,7 @@ public class ImageTransformTest {
 	//tests borderImage function by creating a black image and testing its 4 corners berfore and after calling the function and making sure that before they are bblack and after they are white
 	@Test
 	public void testBorderImage() {
-    ImageTransform it = new ImageTransform("Topic",true,true,"filter","shape");
+    ImageTransform it = new ImageTransform("Topic",true,true,"filter","shape",800,600);
 
        BufferedImage startImage = new BufferedImage(100, 200, BufferedImage.TYPE_INT_ARGB);
        Graphics2D imageGraphicsManipulator = startImage.createGraphics();
@@ -213,7 +213,7 @@ public class ImageTransformTest {
 	//testing the resizeImages function by resizing the images and the compringthem to the correct hieght and width
 	@Test
 	public void testResizeImages() {
-		ImageTransform imageTransform = new ImageTransform("test",true,true,"filter","shape");
+		ImageTransform imageTransform = new ImageTransform("test",true,true,"filter","shape",800,600);
 
 		List<BufferedImage> testImages = new ArrayList<BufferedImage>();
 
@@ -239,7 +239,7 @@ public class ImageTransformTest {
 	//testing combineImages by combining the images and comfirming that it returns a BufferedImage
 	@Test
 	public void testCombineImages() {
-		ImageTransform imageTransform = new ImageTransform("test",true,true,"filter","shape");
+		ImageTransform imageTransform = new ImageTransform("test",true,true,"filter","shape",800,600);
 
 		List<BufferedImage> testImages = new ArrayList<BufferedImage>();
 
@@ -258,8 +258,8 @@ public class ImageTransformTest {
 	//tests to make sure the image generated is the right image by comparingining it with the correct image's encoded string
 	@Test
 	public void testGenerateInsufficientNumberImage() {
-		ImageTransform it = new ImageTransform("test",true,true,"filter","shape");
-		CollageHandler ch = new CollageHandler("test",true,true,"filter","shape");
+		ImageTransform it = new ImageTransform("test",true,true,"filter","shape",800,600);
+		CollageHandler ch = new CollageHandler("test",true,true,"filter","shape",800,600);
 		BufferedImage testingBI = it.generateInsufficientNumberImage();
 		String testBase64 = ch.convertBufferedImageToBase64(testingBI);
 		//String compareImage = getImageEncodedAsStringFromFile();
@@ -270,7 +270,7 @@ public class ImageTransformTest {
 	//tests the getCompletedImage by making sure it returns a the same collage as was created and set in createCollageImage
 	@Test
 	public void testGetCompleteImage() {
-		ImageTransform it = new ImageTransform("test",true,true,"filter","shape");
+		ImageTransform it = new ImageTransform("test",true,true,"filter","shape",800,600);
 		BufferedImage collage = it.createCollageImage();
 		BufferedImage completeCollage = it.getCompleteImage();
 		assertEquals(completeCollage,collage);
@@ -278,7 +278,7 @@ public class ImageTransformTest {
 	
 	@Test
 	public void testNoBorders() {
-		ImageTransform it = new ImageTransform("test",false,true,"filter","shape");
+		ImageTransform it = new ImageTransform("test",false,true,"filter","shape",800,600);
 		BufferedImage collage = it.createCollageImage();
 		BufferedImage completeCollage = it.getCompleteImage();
 		assertEquals(completeCollage,collage);
@@ -286,7 +286,7 @@ public class ImageTransformTest {
 	
 	@Test
 	public void testNoRotations() {
-		ImageTransform it = new ImageTransform("test",true,false,"filter","shape");
+		ImageTransform it = new ImageTransform("test",true,false,"filter","shape",800,600);
 		BufferedImage collage = it.createCollageImage();
 		BufferedImage completeCollage = it.getCompleteImage();
 		assertEquals(completeCollage,collage);
@@ -294,7 +294,7 @@ public class ImageTransformTest {
 	
 	@Test
 	public void testSepiaFilter() {
-		ImageTransform it = new ImageTransform("rainbow",true,true,"sepia","shape");
+		ImageTransform it = new ImageTransform("rainbow",true,true,"sepia","shape",800,600);
 		BufferedImage collage = it.createCollageImage();
 		BufferedImage completeCollage = it.getCompleteImage();
 		assertEquals(completeCollage,collage);
@@ -302,7 +302,7 @@ public class ImageTransformTest {
 	
 	@Test
 	public void testBlackAndWhiteFilter() {
-		ImageTransform it = new ImageTransform("rainbow",true,true,"blackAndWhite","shape");
+		ImageTransform it = new ImageTransform("rainbow",true,true,"blackAndWhite","shape",800,600);
 		BufferedImage collage = it.createCollageImage();
 		BufferedImage completeCollage = it.getCompleteImage();
 		assertEquals(completeCollage,collage);
@@ -310,7 +310,7 @@ public class ImageTransformTest {
 	
 	@Test
 	public void testGrayscaleFilter() {
-		ImageTransform it = new ImageTransform("rainbow",true,true,"grayscale","shape");
+		ImageTransform it = new ImageTransform("rainbow",true,true,"grayscale","shape",800,600);
 		BufferedImage collage = it.createCollageImage();
 		BufferedImage completeCollage = it.getCompleteImage();
 		assertEquals(completeCollage,collage);
@@ -318,7 +318,7 @@ public class ImageTransformTest {
 	
 	@Test
 	public void testNoShapeCollage() {
-		ImageTransform it = new ImageTransform("test",true,true,"grayscale","");
+		ImageTransform it = new ImageTransform("test",true,true,"grayscale","",800,600);
 		BufferedImage collage = it.createCollageImage();
 		BufferedImage completeCollage = it.getCompleteImage();
 		assertEquals(completeCollage,collage);

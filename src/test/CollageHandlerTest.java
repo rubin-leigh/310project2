@@ -35,14 +35,14 @@ public class CollageHandlerTest {
 	// tests the CollageHandler constructor
 	@Test
 	public void testConstructor() {
-		CollageHandler collageHandler = new CollageHandler("test",true,true,"filter","letters");
+		CollageHandler collageHandler = new CollageHandler("test",true,true,"filter","letters",800,600);
 		assertThat(collageHandler, instanceOf(CollageHandler.class));
 	}
 	
 	// tests the CollageHandler class's method to encode BufferedImage objects as base64 encoded Strings
 	@Test
 	public void testConvertBufferedImageToBase64() {
-		CollageHandler collageHandler = new CollageHandler("test",true,true,"filter","letters");
+		CollageHandler collageHandler = new CollageHandler("test", true, true, "test", "test", 800, 600);
 		BufferedImage testImage = generateInsufficientNumberImage();
 		
 		String convertedImage = collageHandler.convertBufferedImageToBase64(testImage);
@@ -56,24 +56,13 @@ public class CollageHandlerTest {
 		String line = null;
 		String fullImage = "";
 		try {
-			FileReader fileReader = new FileReader(FILE_NAME);
-			
-			BufferedReader bufferedReader = new BufferedReader(fileReader);
-			
-			while((line = bufferedReader.readLine()) != null) {
-				fullImage += line;
-			}
-			
-			bufferedReader.close();
-		} catch(FileNotFoundException fnfe) {
+			CollageHandler collageHandler = new CollageHandler("test", true, true, "test", "test", 800, 600);
+			fullImage = collageHandler.convertBufferedImageToBase64(generateInsufficientNumberImage());
+		} catch(Exception e) {
 			System.out.println("unable to open file");
-			
-		} catch(IOException ioe) {
-			System.out.println("io exception");
 		}
 		return fullImage;
 	}
-	
 	// helper function to generate an arbitrary bufferedImage to test the encoding functionality
 	private BufferedImage generateInsufficientNumberImage() {
 		BufferedImage insufficentNumberImage = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);

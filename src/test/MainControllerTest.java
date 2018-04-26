@@ -89,7 +89,7 @@ public class MainControllerTest {
     		Collage testCollage = new Collage();
     		Mockito.when(ch.build()).thenReturn(testCollage);
     		
-    		Collage producedCollage = mainController.buildCollage("Cat",true,true,"sepia","letters");
+    		Collage producedCollage = mainController.buildCollage("Cat",true,true,"sepia","letters",800,600);
     		assertThat(producedCollage, instanceOf(Collage.class));
     }
     
