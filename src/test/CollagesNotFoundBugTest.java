@@ -32,8 +32,6 @@ public class CollagesNotFoundBugTest {
 		Mockito.when(request.getParameter("rotations")).thenReturn("true");
 		Mockito.when(request.getParameter("filter")).thenReturn("None");
 		Mockito.when(request.getParameter("letters")).thenReturn("");
-		Mockito.when(request.getParameter("width")).thenReturn("800");
-		Mockito.when(request.getParameter("height")).thenReturn("600");
 		Mockito.when(request.getSession()).thenReturn(session);
 		Mockito.when(response.getWriter()).thenReturn(pw);
 		Mockito.when(request.getRequestDispatcher("/CollageViewerPage.jsp")).thenReturn(rd);
