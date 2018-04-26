@@ -44,9 +44,18 @@ public class SaveServlet extends HttpServlet {
 			JDBC jdbc = new JDBC();
 			Collage currentCollage = (Collage) session.getAttribute("MainCollage");
 			ArrayList<Collage> previousCollages = (ArrayList<Collage>) session.getAttribute("PreviousCollageList");
-			previousCollages.add(0, currentCollage);
+			if (previousCollages == null) {
+				previousCollages = new ArrayList<Collage>();
+				session.setAttribute("PreviousCollageList", previousCollages);
+			}
+			if (currentCollage != null) {
+				previousCollages.add(0, currentCollage);
+			}
 			jdbc.saveData(previousCollages, currentUser, false);
-			previousCollages.remove(0);
+			if (currentCollage != null) {
+				previousCollages.remove(0);
+			}
+			
 			out.println("Success");
 			this.status = "Success";
 			return;

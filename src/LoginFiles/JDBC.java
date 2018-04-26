@@ -250,6 +250,7 @@ public class JDBC {
 				ps.execute();
 				
 				//then save the new ones
+				System.out.println(collages.size());
 				for (int i = 0; i < collages.size(); i++) {
 					Collage currentCollage = collages.get(i);
 					ps = conn.prepareStatement(insertPreviousCollage);
