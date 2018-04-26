@@ -30,9 +30,23 @@
 			saveCollage();
 			
 		});
+		document.getElementById("deleteButton").addEventListener("click", function(e) {
+			e.preventDefault();
+			deleteCollage();
+		});
+			
 		loadData();
 	});
-
+	function deleteCollage() {
+		var xhttp = new XMLHttpRequest();
+		var switchCollages = "DeleteServlet";
+		xhttp.open("GET", switchCollages, false);
+		xhttp.send();
+		var response = xhttp.responseText;
+		response = JSON.parse(response);
+		
+		update(response)
+	}
 	function loadData() {
 		var xhttp = new XMLHttpRequest();
 		var location = "LoadServlet";
@@ -45,6 +59,9 @@
 			document.getElementById("MainCollageView").innerHTML = "<img id='mainCollage' src='' width='100%' height='100%' alt='Image Text' /></div>"
 			firstTime = false;
 			update(response);
+		} else {
+			
+			firstTime = true;
 		}
 		console.log(response);
 	};
@@ -55,37 +72,46 @@
 		xhttp.send();
 		var response = xhttp.responseText;
 		console.log(response);
+		alert("Saved Collages!");
+		//$("#saveSuccess").removeClass("hidden");
+		
 	}
 	function update(data) {
-		document.getElementById("mainCollage").src = "data:image/png;base64," + data.image.image;
-		document.getElementById("header").innerHTML = "Collage for Topic " + data.image.topic;
-		var previousCollageDiv = document.getElementById("container");
-		document.getElementById("container").innerHTML = "";
+		if (!data.isEmpty) {
+			document.getElementById("mainCollage").src = "data:image/png;base64," + data.image.image;
+			document.getElementById("header").innerHTML = "Collage for Topic " + data.image.topic;
+			var previousCollageDiv = document.getElementById("container");
+			document.getElementById("container").innerHTML = "";
+			
+			
+			for (var i = 0; i < data.previousCollages.length; i++) {
+				var newImageDiv = document.createElement("div");
+				newImageDiv.id = i + "div";
+				newImageDiv.className = "previousCollage";
+				var newImage = document.createElement("img");
+				newImage.src = 'data:image/png;base64,' + data.previousCollages[i].image;
+				newImage.className = "previousCollageImage";
+				newImage.alt = "Image Text";
+				newImage.id = i + "image";
+				newImage.addEventListener("click", function(x) {
+					//update backend
+					//use backend response to update front end
+					var url = "SwitchCollage?id=" + x;
+					var xhttp = new XMLHttpRequest();
+					xhttp.open("GET", url, false);
+					xhttp.send();
+					var data = xhttp.responseText;
+					data = JSON.parse(data);
+					update(data);
+					
+				}.bind(this, i) );
+				newImageDiv.appendChild(newImage);
+				document.getElementById("container").appendChild(newImageDiv);
+			}
 		
-		
-		for (var i = 0; i < data.previousCollages.length; i++) {
-			var newImageDiv = document.createElement("div");
-			newImageDiv.id = i + "div";
-			newImageDiv.className = "previousCollage";
-			var newImage = document.createElement("img");
-			newImage.src = 'data:image/png;base64,' + data.previousCollages[i].image;
-			newImage.className = "previousCollageImage";
-			newImage.alt = "Image Text";
-			newImage.id = i + "image";
-			newImage.addEventListener("click", function(x) {
-				//update backend
-				//use backend response to update front end
-				var url = "SwitchCollage?id=" + x;
-				var xhttp = new XMLHttpRequest();
-				xhttp.open("GET", url, false);
-				xhttp.send();
-				var data = xhttp.responseText;
-				data = JSON.parse(data);
-				update(data);
-				
-			}.bind(this, i) );
-			newImageDiv.appendChild(newImage);
-			document.getElementById("container").appendChild(newImageDiv);
+		} else {
+			document.getElementById("MainCollageView").innerHTML = "<div id='emptyImage'></div>";
+			firstTime = true;
 		}
 	}
 
@@ -234,6 +260,7 @@
 				<div id="right">
 				<button id="submitButton" class="buttons"value="Build Collage">Build Collage</button>
 				<button id="saveButton" class="buttons" value="Save">Save</button>
+				<span id="saveSuccess" class="hidden">Save Succeeded!</span>
 				<button id="exportButton" class="buttons" value="Export">Export</button>
 				<button id="deleteButton" class="buttons" value="Delete">Delete</button>
 				

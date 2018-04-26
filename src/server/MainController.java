@@ -60,14 +60,14 @@ public class MainController extends HttpServlet {
 				Collage topicCollage = buildCollage(topic, borders, rotations, filter, letters, height, width);
 				HttpSession session = request.getSession();
 				ArrayList<Collage> previousList;
-				if(first.equals("true")) {
+				if(first.equals("true") || session.getAttribute("PreviousCollageList") == null) {
 					previousList = new ArrayList<Collage>();
 					session.setAttribute("PreviousCollageList", previousList);
 				} else {
 					previousList = getPreviousCollageList(session);
 					
 				}
-				if(!first.equals("true")) {
+				if(!first.equals("true") && previousList != null) {
 					System.out.println("running this");
 					previousList.add(0, (Collage) session.getAttribute("MainCollage"));
 				}
