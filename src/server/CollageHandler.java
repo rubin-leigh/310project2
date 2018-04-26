@@ -13,21 +13,25 @@ public class CollageHandler {
 	private boolean rotations; 
 	private String filter; 
 	private String letters; 
+	private int height;
+	private int width;
 	private Collage newCollage;
 	private ImageTransform imageTransformer;
 
 	//initializes the CollageHandler with String parameter t for collage topic
-	public CollageHandler(String t, boolean borders, boolean rotations, String filter, String letters){
+	public CollageHandler(String t, boolean borders, boolean rotations, String filter, String letters, int height, int width){
 		topic = t;
 		this.borders = borders; 
 		this.rotations = rotations;
 		this.filter = filter; 
 		this.letters = letters;
+		this.height = height;
+		this.width = width;
 	}
 
 	//builds collage with ImageTransform object and returns Collage object
 	public Collage build(){
-		imageTransformer = new ImageTransform(topic, borders, rotations, filter, letters);
+		imageTransformer = new ImageTransform(topic, borders, rotations, filter, letters, 600, 800);
 		BufferedImage completeCollage = imageTransformer.createCollageImage();
 		Collage collageWrapper = new Collage();
 		collageWrapper.setTopic(topic);

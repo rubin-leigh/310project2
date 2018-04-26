@@ -36,7 +36,7 @@ public class MainController extends HttpServlet {
     		throws ServletException, IOException  {
 				String topic = request.getParameter("topic");
 				this.setTopic(topic);
-				System.out.println(topic);
+				//System.out.println(topic);
 				String first = request.getParameter("first");
 				String stringBorders = request.getParameter("borders");
 				boolean borders;
@@ -55,7 +55,9 @@ public class MainController extends HttpServlet {
 				}
 				String filter = request.getParameter("filter");
 				String letters = request.getParameter("letters");
-				Collage topicCollage = buildCollage(topic, borders, rotations, filter, letters);
+				int height = Integer.parseInt(request.getParameter("height"));
+				int width = Integer.parseInt(request.getParameter("width"));
+				Collage topicCollage = buildCollage(topic, borders, rotations, filter, letters, height, width);
 				HttpSession session = request.getSession();
 				ArrayList<Collage> previousList;
 				if(first.equals("true") || session.getAttribute("PreviousCollageList") == null) {
@@ -89,7 +91,9 @@ public class MainController extends HttpServlet {
 				boolean rotations = true;
 				String filter = "None";
 				String letters = "Test";
-				Collage topicCollage = buildCollage(topic, borders, rotations, filter, letters);
+				int height = 600;
+				int width = 800;
+				Collage topicCollage = buildCollage(topic, borders, rotations, filter, letters, height, width);
 				HttpSession session = request.getSession();
 				
 				session.setAttribute("MainCollage", topicCollage);
@@ -103,8 +107,8 @@ public class MainController extends HttpServlet {
     }
 
 	//builds collage with String paramater topic
-	public Collage buildCollage(String topic, boolean borders, boolean rotations, String filter, String letters){
-		CollageHandler ch = new CollageHandler(topic, borders, rotations, filter, letters);
+	public Collage buildCollage(String topic, boolean borders, boolean rotations, String filter, String letters, int height, int width){
+		CollageHandler ch = new CollageHandler(topic, borders, rotations, filter, letters, height, width);
 		Collage c = ch.build();
 		return c;
 
