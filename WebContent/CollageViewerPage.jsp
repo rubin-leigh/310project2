@@ -128,6 +128,8 @@
 	//function to send the topic to the back end and build the collage then send the user to the next page
 	function buildCollage()
 	{
+		document.getElementById("loader").style.visibility= 'visible';
+		
 		console.log("topic: " + document.getElementById("topic").value);
 		var xhttp = new XMLHttpRequest();
 		
@@ -172,20 +174,23 @@
 				+ document.getElementById("shape").value
 				+ "&borders=" + borderValue + "&filter=" + filter + "&rotations=" + rotateValue + "&height=" + document.getElementById("height").value
 				+ "&width=" + document.getElementById("width").value;
-		xhttp.open("GET", url, false);
-		xhttp.send();
-		var data = xhttp.responseText;
-		data = JSON.parse(data);
 		
-		//console.log(data);
-		if (firstTime) {
-			firstTime = false;	
-			document.getElementById("MainCollageView").innerHTML = "<img id='mainCollage' src='' width='100%' height='100%' alt='Image Text' /></div>"
+		xhttp.open("GET", url, true);
+		xhttp.onreadystatechange = function() {
+			var data = xhttp.responseText;
+			data = JSON.parse(data);
+			//console.log(data);
+			if (firstTime) {
+				firstTime = false;	
+				document.getElementById("MainCollageView").innerHTML = "<img id='mainCollage' src='' width='100%' height='100%' alt='Image Text' /></div>"
+			}
+			update(data);
+			document.getElementById("mainCollage").src = "data:image/png;base64," + data.image.image;
+			document.getElementById("header").innerHTML = "Collage for Topic " + data.image.topic;
 		}
-		update(data);
-
-		document.getElementById("mainCollage").src = "data:image/png;base64," + data.image.image;
-		document.getElementById("header").innerHTML = "Collage for Topic " + data.image.topic;
+		
+		xhttp.send();
+		
 		//update collage for...
 		//update image
 		//update previous collages
@@ -228,6 +233,7 @@
 
 <body>
 	<div id="entirePage">
+	<a href="Login.jsp" target="_self" class="logoutLine">Logout</a>
 		<!-- Title at top of the page -->
 		<%
 			//if (mainCollage != null) {
@@ -243,7 +249,7 @@
 		<div id="MainCollageView">
 			<!-- Div to hold image that populates the main collage viewer area -->
 			
-			<div id="emptyImage"></div>
+			<div id="emptyImage"><div id="loader"></div></div>
 			
 		</div>
 
@@ -261,7 +267,15 @@
 				<button id="submitButton" class="buttons"value="Build Collage">Build Collage</button>
 				<button id="saveButton" class="buttons" value="Save">Save</button>
 				<span id="saveSuccess" class="hidden">Save Succeeded!</span>
-				<button id="exportButton" class="buttons" value="Export">Export</button>
+				
+				<div class="dropdown">
+					<button id="exportButton" class="buttons" value="Export">Export</button>
+						<div class="dropdown-content">
+    							<a href="data:image/png;base64,<%=mainCollage.getImage()%>" download="test.png">Export as PNG</a>
+    							<a href="data:image/jpg;base64,<%=mainCollage.getImage()%>" download="test.jpg">Export as PNG</a>
+ 				 		</div>
+				</div>
+				
 				<button id="deleteButton" class="buttons" value="Delete">Delete</button>
 				
 				</div>
