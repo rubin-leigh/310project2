@@ -1,48 +1,45 @@
 package test;
-  
+
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.Base64;
 
 import javax.imageio.ImageIO;
 
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.junit.Assert.assertThat;
-
+import server.Collage;
 import server.CollageHandler;
 
 public class CollageHandlerTest {
 
 	private static final int COLLAGE_WIDTH = 1120;
 	private static final int COLLAGE_HEIGHT = 600;
-	private static final String FILE_NAME = "insufficientNumberImage.txt";
+	private static final String FILE_NAME = "insufficientNumberImage.png";
 	
 	
 	// tests the CollageHandler constructor
 	@Test
 	public void testConstructor() {
-		CollageHandler collageHandler = new CollageHandler("test",true,true,"filter","letters");
+		CollageHandler collageHandler = new CollageHandler("test", true, true, "test", "test", 800, 600);
+		Collage c = collageHandler.build();
+		assertThat(c, instanceOf(Collage.class));
 		assertThat(collageHandler, instanceOf(CollageHandler.class));
 	}
 	
 	// tests the CollageHandler class's method to encode BufferedImage objects as base64 encoded Strings
 	@Test
 	public void testConvertBufferedImageToBase64() {
-		CollageHandler collageHandler = new CollageHandler("test",true,true,"filter","letters");
+		CollageHandler collageHandler = new CollageHandler("test", true, true, "test", "test", 800, 600);
 		BufferedImage testImage = generateInsufficientNumberImage();
 		
 		String convertedImage = collageHandler.convertBufferedImageToBase64(testImage);
@@ -56,20 +53,10 @@ public class CollageHandlerTest {
 		String line = null;
 		String fullImage = "";
 		try {
-			FileReader fileReader = new FileReader(FILE_NAME);
-			
-			BufferedReader bufferedReader = new BufferedReader(fileReader);
-			
-			while((line = bufferedReader.readLine()) != null) {
-				fullImage += line;
-			}
-			
-			bufferedReader.close();
-		} catch(FileNotFoundException fnfe) {
+			CollageHandler collageHandler = new CollageHandler("test", true, true, "test", "test", 800, 600);
+			fullImage = collageHandler.convertBufferedImageToBase64(generateInsufficientNumberImage());
+		} catch(Exception e) {
 			System.out.println("unable to open file");
-			
-		} catch(IOException ioe) {
-			System.out.println("io exception");
 		}
 		return fullImage;
 	}
@@ -109,7 +96,6 @@ public class CollageHandlerTest {
         }
 
         return insufficentNumberImage;
-
     }
 	
 	@Test

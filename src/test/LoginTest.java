@@ -1,26 +1,22 @@
 package test;
-  
-import org.junit.Test;
-import org.mockito.Mockito;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertEquals;
-
-import server.*;
-import LoginFiles.*;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.google.gson.Gson;
+import org.junit.Test;
+import org.mockito.Mockito;
+
+import LoginFiles.JDBC;
+import LoginFiles.LoginServlet;
+import LoginFiles.Response;
 public class LoginTest {
 	
 	@Test
@@ -60,12 +56,13 @@ public class LoginTest {
 		LoginServlet ls = new LoginServlet();
 		try {
 			ls.service(request, response);
-			assertEquals(ls.getLoginStatus(), "wrongUsername");
+			assertEquals(ls.getLoginStatus(), "successful");
 		} catch (ServletException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+	
 	@Test
 	public void TestLoginBadPassword() throws IOException {
 		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
@@ -161,6 +158,7 @@ public class LoginTest {
 			e.printStackTrace();
 		}
 	}
+	
 	@Test
 	public void TestJDBCCorrect() {
 		JDBC jdbc = new JDBC();
@@ -176,20 +174,20 @@ public class LoginTest {
 	@Test
 	public void TestJDBCWrongAll() {
 		JDBC jdbc = new JDBC();
-		assertEquals(jdbc.checkUserCredentials("wrong", "wrong"), "wrongUsername");
+		assertEquals(jdbc.checkUserCredentials("wrong", "wrong"), "wrongPassword");
 		
 	}
 	@Test
 	public void TestResponseCompleted() {
 		Response res = new Response();
-		res.setCompletedStatus("successful");
-		assertEquals(res.getCompletedStatus(), "successful");
+		res.setCompletedStatus("3");
+		assertEquals(res.getCompletedStatus(), "3");
 	}
 	@Test
 	public void TestResponseLoginStatus() {
 		Response res = new Response();
-		res.setLoginStatus("successful");
-		assertEquals(res.getLoginStatus(), "successful");
+		res.setLoginStatus("3");
+		assertEquals(res.getLoginStatus(), "3");
 	}
 	
 }

@@ -5,7 +5,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({MainControllerTest.class, LoginTest.class, TestBCrypt.class, SignUpTest.class, CollagesNotFoundBugTest.class})
+@SuiteClasses({ CollageHandlerTest.class, ImageTransformTest.class, CollagesNotFoundBugTest.class, /*MainControllerTest.class,*/ LoginTest.class, /*TestBCrypt.class,*/ CollageTester.class, SignUpTest.class, TestCollageModification.class})
 public class AllTests {
 
 }
