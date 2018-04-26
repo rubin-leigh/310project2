@@ -41,8 +41,8 @@ public class ImageTransform {
 	private String filter; 
 	private String letters; 
 	
-	private static final int COLLAGE_WIDTH = 1120;
-	private static final int COLLAGE_HEIGHT = 600;
+	private static int COLLAGE_WIDTH = 1120;
+	private static int COLLAGE_HEIGHT = 600;
 	private static final int COLLAGE_SIZE = COLLAGE_WIDTH * COLLAGE_HEIGHT; // total number of pixels
 	private static final int SCALED_IMAGE_SIZE = COLLAGE_SIZE/20;
 	private static final int TOTAL_COMBINED_AREA = SCALED_IMAGE_SIZE*30;
@@ -60,12 +60,14 @@ public class ImageTransform {
 
 
 
-	public ImageTransform(String t, boolean borders, boolean rotations, String filter, String letters) {
+	public ImageTransform(String t, boolean borders, boolean rotations, String filter, String letters, int height, int width) {
 		this.topic = t;
 		this.borders = borders; 
 		this.rotations = rotations;
 		this.filter = filter; 
 		this.letters = letters;
+		COLLAGE_HEIGHT = height;
+		COLLAGE_WIDTH = width;
 		this.retrievedImages = new ArrayList<BufferedImage>();
 	}
 	
