@@ -10,10 +10,26 @@ When(/^we create a new collage "([^"]*)"$/) do |arg1|
   fill_in('topic', :with => arg1)
   fill_in('shape', :with => "t")
   find_button('submitButton').click
+  page.find :css, 'img#mainCollage', wait: 30
 end
 
+When(/^we submit a new collage for "([^"]*)"$/) do |arg1|
+  fill_in('topic', :with => arg1)
+  fill_in('shape', :with => "t")
+  find_button('submitButton').click
+end
+
+
 Then(/^I should see the main collage viewer has a collage$/) do
-  page.find_by_id("mainCollage")
+  
+  #page.should have_selector("img#mainCollage"), wait: 30
+  #page.should have_css("cockwipe[value=\"mainCollage\"]")
+  #page.should have_selector?("mainCollage")
+  #wait_until {find_by_id("mainCollage")}
+
+
+
+  page.find :css, 'img#mainCollage'
 end
 
 When(/^click the save button$/) do
@@ -21,7 +37,10 @@ When(/^click the save button$/) do
 end
 
 Then(/^we click SaveToHistoryButton$/) do
+  #driver.quit();
+  #driver = new ChromeDriver();
   find_button('saveButton').click
+  #page.driver.switchTo().alert().accept();
 end
 
 Then(/^we should see the collage "([^"]*)" in the PreviousCollageViewer$/) do |arg1|
@@ -29,11 +48,14 @@ Then(/^we should see the collage "([^"]*)" in the PreviousCollageViewer$/) do |a
 end
 
 When(/^log out$/) do
-  find_button('logoutButton').click
+  #click_on(class: 'logoutLine')
+  #find(:xpath, "//a[@href='/Login.jsp']").click
+   #page.find_by_css("a.logoutLine").click
+  find("a", :text => "Logout").click
 end
 
 Then(/^I should be on the login page$/) do
-  current_path.should == "310Project2/CollageViewerPage.jsp"
+  current_path.should == "/310Project2/Login.jsp"
 end
 
 When(/^log in$/) do
@@ -102,12 +124,14 @@ Then(/^I should see there is a button called export$/) do
   page.find_by_id("exportButton", visible: true)
 end
 
-Then(/^I should see there is a radio button called png$/) do
-  pending # Write code here that turns the phrase above into concrete actions
+Then(/^I should see there is a button called png$/) do
+  find_button('exportButton').hover
+  page.find_by_id("pngDownload")
 end
 
-Then(/^I should see there is a radio button called pdf$/) do
-  pending # Write code here that turns the phrase above into concrete actions
+Then(/^I should see there is a button called pdf$/) do
+  find_button('exportButton').hover
+  page.find_by_id("pdfDownload")
 end
 
 Then(/^the current collage should have alt text "([^"]*)"$/) do |arg1|
@@ -123,7 +147,7 @@ Then(/^we should see the PreviousCollageViewer has one new element$/) do
 end
 
 Then(/^we should see a loading image$/) do
-  pending # Write code here that turns the phrase above into concrete actions
+  page.find_by_id("loader")
 end
 
 Then(/^I should see error text appear$/) do
@@ -183,7 +207,19 @@ When(/^I enter (\d+) in the width input box$/) do |arg1|
 end
 
 Then(/^I should see the collage has a height and width corresponding to those values$/) do
-  expect(page.find('#mainCollage')['alt']).to have_content "50"
+  expect(page.find('#mainCollage')['alt']).to have_content "600"
+  expect(page.find('#mainCollage')['alt']).to have_content "800"
 end
+
+Then(/^I hit the png download button$/) do
+  find_button('exportButton').hover
+  page.find_by_id("pngDownload").click
+end
+
+Then(/^I hit the pdf download button$/) do
+  find_button('exportButton').hover
+  page.find_by_id("pdfDownload").click
+end
+
 
 
