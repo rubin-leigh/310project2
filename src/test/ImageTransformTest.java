@@ -324,6 +324,14 @@ public class ImageTransformTest {
 		assertEquals(completeCollage,collage);
 	}
 	
+	@Test
+	public void testHeightAndWidth() {
+		ImageTransform it = new ImageTransform("test",true,true,"none","",1000,500);
+		BufferedImage completeCollage = it.getCompleteImage();
+		assertEquals(completeCollage.getWidth(),500);
+		assertEquals(completeCollage.getHeight(),1000);
+	}
+	
 	//helper image to cerate a buffered image we can test with 
 	private BufferedImage createFixedSizeBufferedImage() {
 		return new BufferedImage(500, 500, BufferedImage.TYPE_INT_ARGB);
