@@ -10,6 +10,7 @@ public class Collage implements Serializable{
 	private String filter;
 	private boolean border;
 	private boolean rotation;
+	private String altText;
 
 	//reuturns collage topic
 	public String getTopic(){
@@ -52,6 +53,12 @@ public class Collage implements Serializable{
 	
 	public boolean getRotation() {
 		return rotation;
+	}
+	public String getAltText() {
+		return altText;
+	}
+	public void setAltText(String altText) {
+		this.altText = altText;
 	}
 	
 }

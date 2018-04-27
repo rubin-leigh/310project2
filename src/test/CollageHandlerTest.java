@@ -41,30 +41,36 @@ public class CollageHandlerTest {
 	
 	// tests the CollageHandler class's method to encode BufferedImage objects as base64 encoded Strings
 	@Test
-	public void testConvertBufferedImageToBase64() {
+	public void testConvertBufferedImageToBase64() throws IOException, Exception{
 		CollageHandler collageHandler = new CollageHandler("test", true, true, "test", "test", 800, 600);
 		BufferedImage testImage = generateInsufficientNumberImage();
 		
-		String convertedImage = collageHandler.convertBufferedImageToBase64(testImage);
+		String convertedImage = collageHandler.convertBufferedImageToBase64(testImage, false);
 		
 		assertEquals(getImageEncodedAsStringFromFile(), convertedImage);
 	}
 	
 	// encoded the same buffered image using an online base64 encoder that can be found here:
 	// https://www.base64encode.org/
-	private String getImageEncodedAsStringFromFile() {
+	private String getImageEncodedAsStringFromFile() throws Exception{
 		String line = null;
 		String fullImage = "";
-		try {
-			CollageHandler collageHandler = new CollageHandler("test", true, true, "test", "test", 800, 600);
-			fullImage = collageHandler.convertBufferedImageToBase64(generateInsufficientNumberImage());
-		} catch(Exception e) {
-			System.out.println("unable to open file");
-		}
+		CollageHandler collageHandler = new CollageHandler("test", true, true, "test", "test", 800, 600);
+		fullImage = collageHandler.convertBufferedImageToBase64(generateInsufficientNumberImage(), false);
+
 		return fullImage;
 	}
+	@Test
+	public void makeExceptionOnBase64() throws Exception{
+		String line = null;
+		String fullImage = "";
+		CollageHandler collageHandler = new CollageHandler("test", true, true, "test", "test", 800, 600);
+		fullImage = collageHandler.convertBufferedImageToBase64(generateInsufficientNumberImage(), true);
+
+		
+	}
 	// helper function to generate an arbitrary bufferedImage to test the encoding functionality
-	private BufferedImage generateInsufficientNumberImage() {
+	private BufferedImage generateInsufficientNumberImage() throws IOException{
 		BufferedImage insufficentNumberImage = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
         Graphics2D imageGraphicsManipulator = insufficentNumberImage.createGraphics();
 				// setting font size to 18
@@ -89,13 +95,9 @@ public class CollageHandlerTest {
         imageGraphicsManipulator.setColor(Color.BLACK);
         imageGraphicsManipulator.drawString("Insufficient number of images found", 445, COLLAGE_HEIGHT/2);
         imageGraphicsManipulator.dispose();
-        
-        try {
-        	File fileImage = new File("insufficientNumberImage.png");
-        	ImageIO.write(insufficentNumberImage, "png", fileImage);
-        } catch (IOException e) {
-        		System.out.println("e IOException");
-        }
+    	File fileImage = new File("insufficientNumberImage.png");
+    	ImageIO.write(insufficentNumberImage, "png", fileImage);
+
 
         return insufficentNumberImage;
 

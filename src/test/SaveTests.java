@@ -225,4 +225,68 @@ public class SaveTests {
 		ls.doGet(request, response);
 		assertEquals(ls.getStatus(), "Success");
 	}
+	@Test
+	public void TestSaveFromRequestNullPrev() throws ServletException, IOException {
+		Collage collage = new Collage();
+		collage.setImage("test");
+		collage.setTopic("test");
+		ArrayList<Collage> collages = new ArrayList<Collage>();
+		for (int i = 0; i < 5; i++) {
+			Collage tempCollage = new Collage();
+			tempCollage.setImage("test" + i);
+			tempCollage.setTopic("test" + i);
+			collages.add(tempCollage);
+		}
+		
+		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
+		HttpServletResponse response = Mockito.mock(HttpServletResponse.class);
+		HttpSession session = Mockito.mock(HttpSession.class);
+		PrintWriter pw = Mockito.mock(PrintWriter.class);
+		Mockito.when(request.getSession()).thenReturn(session);
+		Mockito.when(response.getWriter()).thenReturn(pw);
+		Mockito.when(session.getAttribute("userName")).thenReturn("dan");
+		Mockito.when(session.getAttribute("MainCollage")).thenReturn(collage);
+		Mockito.when(session.getAttribute("PreviousCollageList")).thenReturn(null);
+		
+		SaveServlet ls = new SaveServlet();
+		ls.doGet(request, response);
+		assertEquals(ls.getStatus(), "Success");
+		JDBC jdbc = new JDBC();
+		jdbc.resetDatabase(false);
+		
+		
+		
+	}
+	@Test
+	public void TestSaveFromRequestNullCurrent() throws ServletException, IOException {
+		Collage collage = new Collage();
+		collage.setImage("test");
+		collage.setTopic("test");
+		ArrayList<Collage> collages = new ArrayList<Collage>();
+		for (int i = 0; i < 5; i++) {
+			Collage tempCollage = new Collage();
+			tempCollage.setImage("test" + i);
+			tempCollage.setTopic("test" + i);
+			collages.add(tempCollage);
+		}
+		
+		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
+		HttpServletResponse response = Mockito.mock(HttpServletResponse.class);
+		HttpSession session = Mockito.mock(HttpSession.class);
+		PrintWriter pw = Mockito.mock(PrintWriter.class);
+		Mockito.when(request.getSession()).thenReturn(session);
+		Mockito.when(response.getWriter()).thenReturn(pw);
+		Mockito.when(session.getAttribute("userName")).thenReturn("dan");
+		Mockito.when(session.getAttribute("MainCollage")).thenReturn(null);
+		Mockito.when(session.getAttribute("PreviousCollageList")).thenReturn(collages);
+		
+		SaveServlet ls = new SaveServlet();
+		ls.doGet(request, response);
+		assertEquals(ls.getStatus(), "Success");
+		JDBC jdbc = new JDBC();
+		jdbc.resetDatabase(false);
+		
+		
+		
+	}
 }

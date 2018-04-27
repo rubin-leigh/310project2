@@ -20,7 +20,7 @@ import server.*;
 public class CollagesNotFoundBugTest {
 	
 	@Test
-	public void TestTopicInMainController() throws IOException {
+	public void TestTopicInMainController() throws IOException, ServletException {
 		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
 		HttpServletResponse response = Mockito.mock(HttpServletResponse.class);
 		HttpSession session = Mockito.mock(HttpSession.class);
@@ -39,14 +39,11 @@ public class CollagesNotFoundBugTest {
 		Mockito.when(request.getRequestDispatcher("/CollageViewerPage.jsp")).thenReturn(rd);
 		
 		MainController mc = new MainController();
-		try {
-			mc.doGet(request, response);
-			assertEquals(mc.getTopic(), "dog");
+
+		mc.doGet(request, response);
+		assertEquals(mc.getTopic(), "dog");
 			
-		} catch (ServletException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 	}
 	
 }

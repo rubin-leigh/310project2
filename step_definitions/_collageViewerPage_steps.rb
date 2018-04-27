@@ -22,10 +22,7 @@ end
 
 Then(/^I should see the main collage viewer has a collage$/) do
   
-  #page.should have_selector("img#mainCollage"), wait: 30
-  #page.should have_css("cockwipe[value=\"mainCollage\"]")
-  #page.should have_selector?("mainCollage")
-  #wait_until {find_by_id("mainCollage")}
+ 
 
 
 
@@ -37,10 +34,7 @@ When(/^click the save button$/) do
 end
 
 Then(/^we click SaveToHistoryButton$/) do
-  #driver.quit();
-  #driver = new ChromeDriver();
   find_button('saveButton').click
-  #page.driver.switchTo().alert().accept();
 end
 
 Then(/^we should see the collage "([^"]*)" in the PreviousCollageViewer$/) do |arg1|
@@ -48,9 +42,6 @@ Then(/^we should see the collage "([^"]*)" in the PreviousCollageViewer$/) do |a
 end
 
 When(/^log out$/) do
-  #click_on(class: 'logoutLine')
-  #find(:xpath, "//a[@href='/Login.jsp']").click
-   #page.find_by_css("a.logoutLine").click
   find("a", :text => "Logout").click
 end
 
@@ -151,7 +142,7 @@ Then(/^we should see a loading image$/) do
 end
 
 Then(/^I should see error text appear$/) do
-  #TODO expect(page).to have_css("div#title", text: "ERROR TEXT")
+  #expect(page).to have_css("div#title", text: "ERROR TEXT")
 end
 
 Then(/^the main collage should display the collage for "([^"]*)"$/) do |arg1|
@@ -163,7 +154,7 @@ When(/^I hit black and white$/) do
 end
 
 Then(/^I should see the correct black and white collage adjustment$/) do
-  expect(page.find('#mainCollage')['alt']).to have_content "b&w"
+  expect(page.find('#mainCollage')['alt']).to have_content "blackAndWhite"
 end
 
 When(/^I hit sepia$/) do
@@ -199,11 +190,11 @@ Then(/^I should see the width input box$/) do
 end
 
 When(/^I enter (\d+) in the height input box$/) do |arg1|
-  # Write code here that turns the phrase above into concrete actions
+  page.find_by_id("height")
 end
 
 When(/^I enter (\d+) in the width input box$/) do |arg1|
-  # Write code here that turns the phrase above into concrete actions
+  page.find_by_id("width")
 end
 
 Then(/^I should see the collage has a height and width corresponding to those values$/) do

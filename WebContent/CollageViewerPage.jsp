@@ -61,7 +61,6 @@
 			firstTime = false;
 			update(response);
 		} else {
-			
 			firstTime = true;
 		}
 		
@@ -74,7 +73,6 @@
 		xhttp.send();
 		var response = xhttp.responseText;
 		console.log(response);
-		alert("Saved Collages!");
 		//$("#saveSuccess").removeClass("hidden");
 		
 	}
@@ -82,11 +80,7 @@
 		if (!data.isEmpty) {
 			document.getElementById("mainCollage").src = "data:image/png;base64," + data.image.image;
 			document.getElementById("pngDownload").href =  "data:image/png;base64," + data.image.image;
-			
-			
-			
-			
-			
+
 			document.getElementById("pdfDownload").addEventListener("click", function() {
 				var doc = new jsPDF();
 			    var imgData = 'data:image/png;base64,'+ data.image.image;
@@ -210,20 +204,21 @@
 		xhttp.onreadystatechange = function() {
 			if(xhttp.readyState === 4) {
 				var data = xhttp.responseText;
-				
-				
-				data = JSON.parse(data);
-				console.log(data);
-				if (firstTime) {
-					firstTime = false;	
+				if(data != null) {
+					data = JSON.parse(data);
+					console.log(data);
+					if (firstTime) {
+						firstTime = false;	
+					}
+					document.getElementById("MainCollageView").innerHTML = "<img id='mainCollage' src='' width='"+ document.getElementById("width").value + "px' height='" + document.getElementById("height").value + "px' alt='" + data.image.altText + "'/></div>"
+					update(data);
+					var mainCollageView = document.getElementById("MainCollageView");
 					
+					document.getElementById("mainCollage").src = "data:image/png;base64," + data.image.image;
+					document.getElementById("header").innerHTML = "Collage for Topic " + data.image.topic;
 				}
-				document.getElementById("MainCollageView").innerHTML = "<img id='mainCollage' src='' width='100%' height='100%' alt='Image Text' /></div>"
-				update(data);
-				var mainCollageView = document.getElementById("MainCollageView");
 				
-				document.getElementById("mainCollage").src = "data:image/png;base64," + data.image.image;
-				document.getElementById("header").innerHTML = "Collage for Topic " + data.image.topic;
+				
 			}
 			
 			
@@ -301,7 +296,7 @@
 		<div id="MainCollageView">
 			<!-- Div to hold image that populates the main collage viewer area -->
 			
-			<div id="emptyImage"><div id="loader"></div></div>
+			<div id="emptyImage"></div>
 			
 		</div>
 

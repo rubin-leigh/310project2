@@ -35,17 +35,29 @@ public class CollageHandler {
 		BufferedImage completeCollage = imageTransformer.createCollageImage();
 		Collage collageWrapper = new Collage();
 		collageWrapper.setTopic(topic);
-		collageWrapper.setImage(convertBufferedImageToBase64(completeCollage));
+		collageWrapper.setImage(convertBufferedImageToBase64(completeCollage, false));
+		String borderText="borderOff";
+		if(borders==true) {
+			borderText="borderOn";
+		}
+		String rotationText="rotationOff";
+		if(rotations==true) {
+			rotationText="rotationOn";
+		}
+		collageWrapper.setAltText(topic + letters + borderText+rotationText+filter+height+width);
 		return collageWrapper;
 	}
 
 	//converts BufferedImage paramater image into returned base64 string
-	public String convertBufferedImageToBase64(BufferedImage image){
-
+	public String convertBufferedImageToBase64(BufferedImage image, boolean testing){
+		
 		String type = "png";
 		String imageString = null;
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		try {
+			if(testing) {
+				throw new IOException();
+			}
 			// writes bufferedImage to a string
 			ImageIO.write(image, type, Base64.getEncoder().wrap(bos));
 			imageString = bos.toString();

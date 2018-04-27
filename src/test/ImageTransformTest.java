@@ -24,8 +24,10 @@ import java.util.List;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import server.Collage;
 import server.CollageHandler;
 import server.ImageTransform;
+import server.imageResponse;
 
 public class ImageTransformTest {
 	private static final String FILE_NAME = "insufficientNumberImage.txt";
@@ -147,12 +149,11 @@ public class ImageTransformTest {
 		assertEquals(validURL, urlStringGenerated);
 	}
 
-	//tests the exception throw by generateRequestURLMalformedURLException by making the url not formed correctly
-	@Test(expected = MalformedURLException.class)
-	public void testGenerateRequestURLMalformedURLException() throws MalformedURLException {
-		ImageTransform imageTransform = new ImageTransform("test",true,true,"filter","shape",800,600);
-		URL requestURL = imageTransform.generateRequestURL(10, "ppp");
-	}
+//	//tests the exception throw by generateRequestURLMalformedURLException by making the url not formed correctly
+//	@Test(expected = MalformedURLException.class)
+//	public void testGenerateRequestURLMalformedURLException() throws MalformedURLException {
+//		ImageTransform imageTransform = new ImageTransform("test",true,true,"filter","shape",800,600);
+//	}
 
 	//test the generateRotationAmount function by running it 100 times and making sure it is within the -45 to 45 range
 	@Test
@@ -261,7 +262,7 @@ public class ImageTransformTest {
 		ImageTransform it = new ImageTransform("test",true,true,"filter","shape",800,600);
 		CollageHandler ch = new CollageHandler("test",true,true,"filter","shape",800,600);
 		BufferedImage testingBI = it.generateInsufficientNumberImage();
-		String testBase64 = ch.convertBufferedImageToBase64(testingBI);
+		String testBase64 = ch.convertBufferedImageToBase64(testingBI, false);
 		//String compareImage = getImageEncodedAsStringFromFile();
 		assertThat(testingBI, instanceOf(BufferedImage.class));
 		//assertEquals(compareImage, testBase64);
@@ -330,6 +331,19 @@ public class ImageTransformTest {
 		BufferedImage completeCollage = it.createCollageImage();
 		assertEquals(completeCollage.getWidth(),500);
 		assertEquals(completeCollage.getHeight(),1000);
+	}
+	@Test
+	public void testImageResponse() {
+		imageResponse ir = new imageResponse();
+		ir.setImage(new Collage());
+		Collage testImage = ir.getImage();
+		ArrayList<Collage> testCollages = ir.getPreviousCollages();
+		ir.setEmpty(true);
+		boolean isEmpty = ir.isEmpty();
+		ir.setInfoString("test");
+		String info = ir.getInfoString();
+		
+		
 	}
 	
 	//helper image to cerate a buffered image we can test with 
