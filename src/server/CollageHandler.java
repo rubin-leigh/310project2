@@ -31,7 +31,7 @@ public class CollageHandler {
 
 	//builds collage with ImageTransform object and returns Collage object
 	public Collage build(){
-		imageTransformer = new ImageTransform(topic, borders, rotations, filter, letters, 600, 800);
+		imageTransformer = new ImageTransform(topic, borders, rotations, filter, letters, height, width);
 		BufferedImage completeCollage = imageTransformer.createCollageImage();
 		Collage collageWrapper = new Collage();
 		collageWrapper.setTopic(topic);
