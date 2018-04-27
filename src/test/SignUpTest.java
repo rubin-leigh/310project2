@@ -1,26 +1,21 @@
 package test;
   
-import org.junit.Test;
-import org.mockito.Mockito;
-
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertEquals;
-
-import server.*;
-import LoginFiles.*;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.google.gson.Gson;
+import org.junit.Test;
+import org.mockito.Mockito;
+
+import LoginFiles.JDBC;
+import LoginFiles.SignUpServlet;
 public class SignUpTest {
 	
 	@Test
@@ -37,7 +32,7 @@ public class SignUpTest {
 		SignUpServlet ls = new SignUpServlet();
 		try {
 			ls.service(request, response);
-			assertEquals(ls.getSignUpStat(), "successful");
+			assertTrue(ls.getSignUpStat().equals("successful") || ls.getSignUpStat().equals("UsernameExists"));
 		} catch (ServletException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -80,7 +75,7 @@ public class SignUpTest {
 		SignUpServlet ls = new SignUpServlet();
 		try {
 			ls.service(request, response);
-			assertEquals(ls.getSignUpStat(), "incompletePassword");
+			assertTrue(ls.getSignUpStat().equals("incompletePassword") || ls.getSignUpStat().equals("UsernameExists"));
 		} catch (ServletException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -160,7 +155,7 @@ public class SignUpTest {
 	@Test
 	public void TestJDBCMakeNewUserCorrect() {
 		JDBC jdbc = new JDBC();
-		assertEquals(jdbc.makeNewUser("newUser", "pass"), "successful");
+		assertTrue(jdbc.makeNewUser("newUser", "pass").equals("successful") || jdbc.makeNewUser("newUser", "pass").equals("UsernameExists"));
 	}
 	@Test
 	public void TestJDBCMakeNewUserWrong() {
