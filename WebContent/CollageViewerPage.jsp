@@ -128,8 +128,6 @@
 	//function to send the topic to the back end and build the collage then send the user to the next page
 	function buildCollage()
 	{
-		document.getElementById("loader").style.visibility= 'visible';
-		
 		console.log("topic: " + document.getElementById("topic").value);
 		var xhttp = new XMLHttpRequest();
 		
@@ -174,23 +172,20 @@
 				+ document.getElementById("shape").value
 				+ "&borders=" + borderValue + "&filter=" + filter + "&rotations=" + rotateValue + "&height=" + document.getElementById("height").value
 				+ "&width=" + document.getElementById("width").value;
-		
-		xhttp.open("GET", url, true);
-		xhttp.onreadystatechange = function() {
-			var data = xhttp.responseText;
-			data = JSON.parse(data);
-			//console.log(data);
-			if (firstTime) {
-				firstTime = false;	
-				document.getElementById("MainCollageView").innerHTML = "<img id='mainCollage' src='' width='100%' height='100%' alt='Image Text' /></div>"
-			}
-			update(data);
-			document.getElementById("mainCollage").src = "data:image/png;base64," + data.image.image;
-			document.getElementById("header").innerHTML = "Collage for Topic " + data.image.topic;
-		}
-		
+		xhttp.open("GET", url, false);
 		xhttp.send();
+		var data = xhttp.responseText;
+		data = JSON.parse(data);
 		
+		//console.log(data);
+		if (firstTime) {
+			firstTime = false;	
+			document.getElementById("MainCollageView").innerHTML = "<img id='mainCollage' src='' width='" + document.getElementById("width").value + "px' height='" + document.getElementById("height").value + "px' alt='Image Text' /></div>"
+		}
+		update(data);
+
+		document.getElementById("mainCollage").src = "data:image/png;base64," + data.image.image;
+		document.getElementById("header").innerHTML = "Collage for Topic " + data.image.topic;
 		//update collage for...
 		//update image
 		//update previous collages
@@ -267,15 +262,7 @@
 				<button id="submitButton" class="buttons"value="Build Collage">Build Collage</button>
 				<button id="saveButton" class="buttons" value="Save">Save</button>
 				<span id="saveSuccess" class="hidden">Save Succeeded!</span>
-				
-				<div class="dropdown">
-					<button id="exportButton" class="buttons" value="Export">Export</button>
-						<div class="dropdown-content">
-    							<a href="data:image/png;base64,<%=mainCollage.getImage()%>" download="test.png">Export as PNG</a>
-    							<a href="data:image/jpg;base64,<%=mainCollage.getImage()%>" download="test.jpg">Export as PNG</a>
- 				 		</div>
-				</div>
-				
+				<button id="exportButton" class="buttons" value="Export">Export</button>
 				<button id="deleteButton" class="buttons" value="Delete">Delete</button>
 				
 				</div>
@@ -284,13 +271,13 @@
 
 			<div class="slidecontainer">
 				Height
-  				<input type="range" min="500" max="1000" value="600" class="slider" id="height" onchange="changeHeight()" >
+  				<input type="range" min="200" max="1500" value="600" class="slider" id="height" onchange="changeHeight()" >
  				 <h5>Value: <label id="demoHeight"></label></h5>
 			</div>
 
 			<div class="slidecontainer">
 				Width
-  				<input type="range" min="500" max="1000" value="800" class="slider" id="width" onchange="changeWidth()">
+  				<input type="range" min="200" max="1500" value="800" class="slider" id="width" onchange="changeWidth()">
  				<h5> Value: <span id="demoWidth"></span></h5>
 			</div>
 
@@ -333,4 +320,3 @@
 	</div>
 </body>
 </html>
- 

@@ -41,12 +41,12 @@ public class ImageTransform {
 	private String filter; 
 	private String letters; 
 	
-	private static int COLLAGE_WIDTH = 1120;
-	private static int COLLAGE_HEIGHT = 600;
-	private static final int COLLAGE_SIZE = COLLAGE_WIDTH * COLLAGE_HEIGHT; // total number of pixels
-	private static final int SCALED_IMAGE_SIZE = COLLAGE_SIZE/20;
-	private static final int TOTAL_COMBINED_AREA = SCALED_IMAGE_SIZE*30;
-	private static final int FINAL_FOREGROUND_IMAGE_SIZE = (TOTAL_COMBINED_AREA-COLLAGE_SIZE)/29;
+	private int COLLAGE_WIDTH;
+	private int COLLAGE_HEIGHT;
+	private int COLLAGE_SIZE; // total number of pixels
+	private int SCALED_IMAGE_SIZE;
+	private int TOTAL_COMBINED_AREA;
+	private int FINAL_FOREGROUND_IMAGE_SIZE;
 //	private static final String GOOGLE_SEARCH_API_KEY = "AIzaSyCQbxRMKMxuyaIVmosCa_k2sIv5BeavGFs";
 //	private static final String GOOGLE_SEARCH_API_KEY = "AIzaSyADYi8Ob0jmPJbGEMCkJwrB31bOY80RtXs";
 //	private static final String GOOGLE_SEARCH_API_KEY = "AIzaSyAh8tNso-_G-0h5DCft0JibbpPyLYhIPvE";
@@ -66,8 +66,14 @@ public class ImageTransform {
 		this.rotations = rotations;
 		this.filter = filter; 
 		this.letters = letters;
-		COLLAGE_HEIGHT = height;
-		COLLAGE_WIDTH = width;
+		this.COLLAGE_HEIGHT = height;
+		this.COLLAGE_WIDTH = width;
+		System.out.println("collage width: " + COLLAGE_WIDTH);
+		System.out.println("collage height: " + COLLAGE_HEIGHT);
+		this.COLLAGE_SIZE = COLLAGE_WIDTH * COLLAGE_HEIGHT; // total number of pixels
+		this.SCALED_IMAGE_SIZE = COLLAGE_SIZE/20;
+		this.TOTAL_COMBINED_AREA = SCALED_IMAGE_SIZE*30;
+		this.FINAL_FOREGROUND_IMAGE_SIZE = (TOTAL_COMBINED_AREA-COLLAGE_SIZE)/29;
 		this.retrievedImages = new ArrayList<BufferedImage>();
 	}
 	
@@ -221,6 +227,8 @@ public class ImageTransform {
 	// generate url to make request to our Google custom search engine
 	public URL generateRequestURL(int resultNumber, String garbageString) throws MalformedURLException{
 		URL requestURL = null;
+		this.topic = this.topic.replaceAll(" ", "+");
+		System.out.println(topic);
 		if(resultNumber > 0) {
 			requestURL = new URL("http" + garbageString + "s://www.googleapis.com/customsearch/v1?key=" + GOOGLE_SEARCH_API_KEY + "&cx=" + GOOGLE_CX + "&q=" + this.topic + "&searchType=image&imgType=photo&imgSize=medium&start=" + resultNumber + "&num=10");
 		}
@@ -300,7 +308,7 @@ public class ImageTransform {
 		int y = 0;
 		int imageNum = 0;
 		Random rand = new Random();
-		for(int i = 0; i < 30; i++) {
+		for(int i = 0; i < 31; i++) {
 			Collections.shuffle(this.retrievedImages);
 			for(BufferedImage image : this.retrievedImages) {
 //				if (imageNum == 0) {
@@ -330,8 +338,8 @@ public class ImageTransform {
 						image = rotateImage(image,rotationAmount);
 					}
 					
-					x = imageNum*(COLLAGE_WIDTH/30);
-					y = i*(COLLAGE_HEIGHT/30);
+					x = (int)((imageNum-0.25)*(COLLAGE_WIDTH/30));
+					y = (int)((i-0.5)*(COLLAGE_HEIGHT/30));
 					g.drawImage(image, null,x, y);
 					g.setTransform(backup);
 	//			}
@@ -362,12 +370,12 @@ public class ImageTransform {
             BufferedImage.TYPE_INT_ARGB);
         Graphics2D g = textImage.createGraphics();
         FontRenderContext frc = g.getFontRenderContext();
-        int fontSize = Math.min(600,1800/letters.length());
+        int fontSize = Math.min((int)(COLLAGE_WIDTH*1.5)/letters.length(), Math.min(COLLAGE_HEIGHT,COLLAGE_HEIGHT*3/letters.length()));
         Font font = new Font(Font.MONOSPACED, Font.BOLD, fontSize);
         GlyphVector gv = font.createGlyphVector(frc, letters);
         Rectangle2D box = gv.getVisualBounds();
-        int xOff = (150/letters.length())+(int)-box.getX();
-        int yOff = 25*letters.length()+(int)-box.getY();
+        int xOff = (COLLAGE_WIDTH-(int)(box.getWidth()))/2;
+        int yOff = (COLLAGE_HEIGHT+(int)(box.getHeight()))/2;
         Shape shape = gv.getOutline(xOff,yOff);
         g.setClip(shape);
         g.drawImage(originalImage,0,0,null);
