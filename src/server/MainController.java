@@ -57,6 +57,7 @@ public class MainController extends HttpServlet {
 				String letters = request.getParameter("letters");
 				int height = Integer.parseInt(request.getParameter("height"));
 				int width = Integer.parseInt(request.getParameter("width"));
+				System.out.println(width + "," + height);
 				Collage topicCollage = buildCollage(topic, borders, rotations, filter, letters, height, width);
 				HttpSession session = request.getSession();
 				ArrayList<Collage> previousList;
@@ -84,27 +85,27 @@ public class MainController extends HttpServlet {
 				return;
     }
 
-    public void doPost(HttpServletRequest request, HttpServletResponse response)
-    		throws ServletException, IOException  {
-				String topic = request.getParameter("topic");
-				boolean borders = true;
-				boolean rotations = true;
-				String filter = "None";
-				String letters = "Test";
-				int height = 600;
-				int width = 800;
-				Collage topicCollage = buildCollage(topic, borders, rotations, filter, letters, height, width);
-				HttpSession session = request.getSession();
-				
-				session.setAttribute("MainCollage", topicCollage);
-				ArrayList<Collage> previousList = createNewListForTesting();
-				session.setAttribute("PreviousCollageList", previousList);
-				
-				RequestDispatcher view = request.getRequestDispatcher("/CollageViewerPage.jsp");
-				view.forward(request, response);
-
-				return;
-    }
+//    public void doPost(HttpServletRequest request, HttpServletResponse response)
+//    		throws ServletException, IOException  {
+//				String topic = request.getParameter("topic");
+//				boolean borders = true;
+//				boolean rotations = true;
+//				String filter = "None";
+//				String letters = "Test";
+//				int height = 600;
+//				int width = 800;
+//				Collage topicCollage = buildCollage(topic, borders, rotations, filter, letters, height, width);
+//				HttpSession session = request.getSession();
+//				
+//				session.setAttribute("MainCollage", topicCollage);
+//				ArrayList<Collage> previousList = createNewListForTesting();
+//				session.setAttribute("PreviousCollageList", previousList);
+//				
+//				RequestDispatcher view = request.getRequestDispatcher("/CollageViewerPage.jsp");
+//				view.forward(request, response);
+//
+//				return;
+//    }
 
 	//builds collage with String paramater topic
 	public Collage buildCollage(String topic, boolean borders, boolean rotations, String filter, String letters, int height, int width){

@@ -326,8 +326,8 @@ public class ImageTransformTest {
 	
 	@Test
 	public void testHeightAndWidth() {
-		ImageTransform it = new ImageTransform("test",true,true,"none","",1000,500);
-		BufferedImage completeCollage = it.getCompleteImage();
+		ImageTransform it = new ImageTransform("test",true,true,"sepia","",1000,500);
+		BufferedImage completeCollage = it.createCollageImage();
 		assertEquals(completeCollage.getWidth(),500);
 		assertEquals(completeCollage.getHeight(),1000);
 	}

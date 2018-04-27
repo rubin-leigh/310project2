@@ -37,7 +37,7 @@ public class SignUpTest {
 		SignUpServlet ls = new SignUpServlet();
 		try {
 			ls.service(request, response);
-			assertEquals(ls.getSignUpStat(), "UsernameExists");
+			assertEquals(ls.getSignUpStat(), "successful");
 		} catch (ServletException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -66,6 +66,8 @@ public class SignUpTest {
 			e.printStackTrace();
 		}
 	}
+	
+	@Test
 	public void TestSignUpBadPassword() throws IOException {
 		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
 		HttpServletResponse response = Mockito.mock(HttpServletResponse.class);
@@ -84,6 +86,7 @@ public class SignUpTest {
 			e.printStackTrace();
 		}
 	}
+	
 	@Test
 	public void TestLoginEmptyAll() throws IOException {
 		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
@@ -157,7 +160,7 @@ public class SignUpTest {
 	@Test
 	public void TestJDBCMakeNewUserCorrect() {
 		JDBC jdbc = new JDBC();
-		assertEquals(jdbc.makeNewUser("newUser", "pass"), "UsernameExists");
+		assertEquals(jdbc.makeNewUser("newUser", "pass"), "successful");
 	}
 	@Test
 	public void TestJDBCMakeNewUserWrong() {
