@@ -15,6 +15,7 @@
 <meta charset="UTF-8">
 <title>User Page</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js" integrity="sha384-CchuzHs077vGtfhGYl9Qtc7Vx64rXBXdIAZIPbItbNyWIRTdG0oYAqki3Ry13Yzu" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="CollageViewerPage.css">
 </head>
 <script>
@@ -63,6 +64,7 @@
 			
 			firstTime = true;
 		}
+		
 		console.log(response);
 	};
 	function saveCollage() {
@@ -79,6 +81,21 @@
 	function update(data) {
 		if (!data.isEmpty) {
 			document.getElementById("mainCollage").src = "data:image/png;base64," + data.image.image;
+			document.getElementById("pngDownload").href =  "data:image/png;base64," + data.image.image;
+			
+			
+			
+			
+			
+			document.getElementById("pdfDownload").addEventListener("click", function() {
+				var doc = new jsPDF();
+			    var imgData = 'data:image/png;base64,'+ data.image.image;
+			   
+			    doc.addImage(imgData, 'PNG', 15, 40, 180, 160);
+			    doc.save('test');
+			}.bind(this, data));
+			
+			
 			document.getElementById("header").innerHTML = "Collage for Topic " + data.image.topic;
 			var previousCollageDiv = document.getElementById("container");
 			document.getElementById("container").innerHTML = "";
@@ -128,7 +145,21 @@
 	//function to send the topic to the back end and build the collage then send the user to the next page
 	function buildCollage()
 	{
-		document.getElementById("loader").style.visibility= 'visible';
+		
+		var loaderDiv = document.createElement("div");
+		loaderDiv.id = "loader";
+		loaderDiv.style.visibility = "visible";
+		var mainCollageView = document.getElementById("MainCollageView");
+		if (firstTime) {
+			var emptyImage = document.getElementById("emptyImage");
+			mainCollageView.removeChild(emptyImage);
+			
+		} else {
+			var collage = document.getElementById("mainCollage");
+			mainCollageView.removeChild(collage);
+		}
+		mainCollageView.appendChild(loaderDiv);
+		//document.getElementById("loader").style.visibility= 'visible';
 		
 		console.log("topic: " + document.getElementById("topic").value);
 		var xhttp = new XMLHttpRequest();
@@ -177,16 +208,26 @@
 		
 		xhttp.open("GET", url, true);
 		xhttp.onreadystatechange = function() {
-			var data = xhttp.responseText;
-			data = JSON.parse(data);
-			//console.log(data);
-			if (firstTime) {
-				firstTime = false;	
+			if(xhttp.readyState === 4) {
+				var data = xhttp.responseText;
+				
+				
+				data = JSON.parse(data);
+				console.log(data);
+				if (firstTime) {
+					firstTime = false;	
+					
+				}
 				document.getElementById("MainCollageView").innerHTML = "<img id='mainCollage' src='' width='100%' height='100%' alt='Image Text' /></div>"
+				update(data);
+				var mainCollageView = document.getElementById("MainCollageView");
+				
+				document.getElementById("mainCollage").src = "data:image/png;base64," + data.image.image;
+				document.getElementById("header").innerHTML = "Collage for Topic " + data.image.topic;
 			}
-			update(data);
-			document.getElementById("mainCollage").src = "data:image/png;base64," + data.image.image;
-			document.getElementById("header").innerHTML = "Collage for Topic " + data.image.topic;
+			
+			
+			
 		}
 		
 		xhttp.send();
@@ -271,8 +312,8 @@
 				<div class="dropdown">
 					<button id="exportButton" class="buttons" value="Export">Export</button>
 						<div class="dropdown-content">
-    							<a href="data:image/png;base64,<%=mainCollage.getImage()%>" download="test.png">Export as PNG</a>
-    							<a href="data:image/jpg;base64,<%=mainCollage.getImage()%>" download="test.jpg">Export as PNG</a>
+    							<a id='pngDownload' href="data:image/png;base64," download="test.png">Export as PNG</a>
+    							<a id='pdfDownload' href="data:image/pdf;base64," download="test.pdf">Export as PDF</a>
  				 		</div>
 				</div>
 				
