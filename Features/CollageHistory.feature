@@ -14,14 +14,14 @@ Scenario: Collage History should Persist
 	And click the delete button
 	
 Scenario: Collage Swapping
-	When we create a new collage "Swap"
+	When we create a new collage "cat"
 	And we click SaveToHistoryButton
-	When we create a new collage "Garbage"
-	And click the collage "Swap" in the PreviousCollageViewer
-	Then the main collage should display the collage for "Swap"
+	When we create a new collage "cat"
+	And click the collage "cat" in the PreviousCollageViewer
+	Then the main collage should display the collage for "cat"
 
 Scenario: Delete Collage
-	When we create a new collage "GetRid"
+	When we create a new collage "owl"
 	And we click SaveToHistoryButton
 	And click the delete button
-	Then we should NOT see the collage "GetRid" in the PreviousCollageViewer
+	Then we should NOT see the collage "owl" in the PreviousCollageViewer
